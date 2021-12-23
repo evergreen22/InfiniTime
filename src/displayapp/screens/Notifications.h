@@ -21,7 +21,7 @@ namespace Pinetime {
                                Pinetime::Controllers::NotificationManager& notificationManager,
                                Pinetime::Controllers::AlertNotificationService& alertNotificationService,
                                Pinetime::Controllers::MotorController& motorController,
-                               Modes mode);
+                               uint32_t screenTimeOut, Modes mode);
         ~Notifications() override;
 
         void Refresh() override;

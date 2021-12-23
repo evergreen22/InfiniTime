@@ -12,7 +12,7 @@ Notifications::Notifications(DisplayApp* app,
                              Pinetime::Controllers::NotificationManager& notificationManager,
                              Pinetime::Controllers::AlertNotificationService& alertNotificationService,
                              Pinetime::Controllers::MotorController& motorController,
-                             Modes mode)
+                             uint32_t screenTimeOut, Modes mode)
   : Screen(app), notificationManager {notificationManager}, alertNotificationService {alertNotificationService}, mode {mode} {
   notificationManager.ClearNewNotificationFlag();
   auto notification = notificationManager.GetLastNotification();
@@ -40,7 +40,7 @@ Notifications::Notifications(DisplayApp* app,
     if (notification.category == Controllers::NotificationManager::Categories::IncomingCall) {
       motorController.StartRinging();
     } else {
-      motorController.RunForDuration(35);
+      motorController.RunForDuration(85);
       timeoutLine = lv_line_create(lv_scr_act(), nullptr);
 
       lv_obj_set_style_local_line_width(timeoutLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 3);
@@ -49,7 +49,7 @@ Notifications::Notifications(DisplayApp* app,
 
       lv_line_set_points(timeoutLine, timeoutLinePoints, 2);
       timeoutTickCountStart = xTaskGetTickCount();
-      timeoutTickCountEnd = timeoutTickCountStart + (5 * 1024);
+      timeoutTickCountEnd = timeoutTickCountStart + screenTimeOut;
     }
   }
 
@@ -76,6 +76,11 @@ void Notifications::Refresh() {
 }
 
 bool Notifications::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
+  if (mode == Modes::Preview && event == Pinetime::Applications::TouchEvents::SwipeUp) {
+    running = false;
+    return true;
+  }
+
   if (mode != Modes::Normal) {
     return false;
   }
@@ -185,7 +190,7 @@ Notifications::NotificationItem::NotificationItem(const char* title,
   switch (category) {
     default: {
       lv_obj_t* alert_subject = lv_label_create(container1, nullptr);
-      lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_ORANGE);
+      lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_YELLOW);
       lv_label_set_long_mode(alert_subject, LV_LABEL_LONG_BREAK);
       lv_obj_set_width(alert_subject, LV_HOR_RES - 20);
       lv_label_set_text(alert_subject, msg);
@@ -193,7 +198,7 @@ Notifications::NotificationItem::NotificationItem(const char* title,
     case Controllers::NotificationManager::Categories::IncomingCall: {
       lv_obj_set_height(container1, 108);
       lv_obj_t* alert_subject = lv_label_create(container1, nullptr);
-      lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_ORANGE);
+      lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_YELLOW);
       lv_label_set_long_mode(alert_subject, LV_LABEL_LONG_BREAK);
       lv_obj_set_width(alert_subject, LV_HOR_RES - 20);
       lv_label_set_text(alert_subject, "Incoming call from");
