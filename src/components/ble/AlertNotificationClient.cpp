@@ -1,5 +1,10 @@
-#include "components/ble/AlertNotificationClient.h"
+/*
+ * Client for the BLE Alert Notification Service (ANS)
+ * Gadgetbridge does *NOT* implement a ANS server
+ */
 #include <algorithm>
+
+#include "components/ble/AlertNotificationClient.h"
 #include "components/ble/NotificationManager.h"
 #include "systemtask/SystemTask.h"
 
@@ -158,7 +163,6 @@ void AlertNotificationClient::OnNotification(ble_gap_event* event) {
     notif.size = messageSize;
     notif.category = Pinetime::Controllers::NotificationManager::Categories::SimpleAlert;
     notificationManager.Push(std::move(notif));
-
     systemTask.PushMessage(Pinetime::System::Messages::OnNewNotification);
   }
 }

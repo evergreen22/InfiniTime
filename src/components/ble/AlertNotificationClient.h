@@ -1,12 +1,18 @@
+/*
+ * Client for the BLE Alert Notification Service (ANS)
+ * Gadgetbridge does *NOT* implement a ANS server
+ */
 #pragma once
 
 #include <cstdint>
 #include <functional>
+
 #define min // workaround: nimble's min/max macros conflict with libstdc++
 #define max
 #include <host/ble_gap.h>
 #undef max
 #undef min
+
 #include "components/ble/BleClient.h"
 
 namespace Pinetime {

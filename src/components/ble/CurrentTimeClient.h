@@ -1,10 +1,18 @@
+/*
+ * Client for the BLE Current Time Service (CTS)
+ * Gadgetbridge does *NOT* implement a CTS server
+ * NRFConnect does implement a CTS server
+ */
 #pragma once
+
+#include <cstdint>
+
 #define min // workaround: nimble's min/max macros conflict with libstdc++
 #define max
 #include <host/ble_gap.h>
 #undef max
 #undef min
-#include <cstdint>
+
 #include "components/ble/BleClient.h"
 
 namespace Pinetime {

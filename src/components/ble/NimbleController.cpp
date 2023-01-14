@@ -1,7 +1,7 @@
-#include "components/ble/NimbleController.h"
 #include <cstring>
 
 #include <hal/nrf_rtc.h>
+
 #define min // workaround: nimble's min/max macros conflict with libstdc++
 #define max
 #include <host/ble_gap.h>
@@ -14,7 +14,9 @@
 #include <services/gatt/ble_svc_gatt.h>
 #undef max
 #undef min
+
 #include "components/ble/BleController.h"
+#include "components/ble/NimbleController.h"
 #include "components/ble/NotificationManager.h"
 #include "components/datetime/DateTimeController.h"
 #include "components/fs/FS.h"
@@ -59,13 +61,9 @@ void nimble_on_reset(int reason) {
 }
 
 void nimble_on_sync(void) {
-  int rc;
-
   NRF_LOG_INFO("Nimble is synced");
-
-  rc = ble_hs_util_ensure_addr(0);
+  int rc = ble_hs_util_ensure_addr(0);
   ASSERT(rc == 0);
-
   nptr->StartAdvertising();
 }
 

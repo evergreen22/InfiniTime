@@ -22,7 +22,7 @@ namespace Pinetime {
         HighProriotyAlert,
         InstantMessage
       };
-      static constexpr uint8_t MessageSize {100};
+      static constexpr uint8_t MessageSize {100}; // value is also set in Gadgetbridge
 
       struct Notification {
         using Id = uint8_t;

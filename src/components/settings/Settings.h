@@ -52,6 +52,7 @@ namespace Pinetime {
         }
         settings.clockFace = face;
       };
+
       uint8_t GetClockFace() const {
         return settings.clockFace;
       };
@@ -61,6 +62,7 @@ namespace Pinetime {
           settingsChanged = true;
         settings.PTS.ColorTime = colorTime;
       };
+
       Colors GetPTSColorTime() const {
         return settings.PTS.ColorTime;
       };
@@ -70,6 +72,7 @@ namespace Pinetime {
           settingsChanged = true;
         settings.PTS.ColorBar = colorBar;
       };
+
       Colors GetPTSColorBar() const {
         return settings.PTS.ColorBar;
       };
@@ -79,6 +82,7 @@ namespace Pinetime {
           settingsChanged = true;
         settings.PTS.ColorBG = colorBG;
       };
+
       Colors GetPTSColorBG() const {
         return settings.PTS.ColorBG;
       };
@@ -94,6 +98,7 @@ namespace Pinetime {
       void SetSettingsMenu(uint8_t menu) {
         settingsMenu = menu;
       };
+
       uint8_t GetSettingsMenu() const {
         return settingsMenu;
       };
@@ -104,6 +109,7 @@ namespace Pinetime {
         }
         settings.clockType = clocktype;
       };
+
       ClockType GetClockType() const {
         return settings.clockType;
       };
@@ -114,6 +120,7 @@ namespace Pinetime {
         }
         settings.notificationStatus = status;
       };
+
       Notification GetNotificationStatus() const {
         return settings.notificationStatus;
       };
@@ -124,6 +131,7 @@ namespace Pinetime {
         }
         settings.screenTimeOut = timeout;
       };
+
       uint32_t GetScreenTimeOut() const {
         return settings.screenTimeOut;
       };
@@ -171,20 +179,20 @@ namespace Pinetime {
         if (goal != settings.stepsGoal) {
           settingsChanged = true;
         }
-        settings.stepsGoal = goal; 
+        settings.stepsGoal = goal;
       };
-      
+
       uint32_t GetStepsGoal() const {
         return settings.stepsGoal;
       };
 
-     void SetAirplaneMode(bool mode) {
-       airplaneMode = mode;
-     };
+      void SetAirplaneMode(bool mode) {
+        airplaneMode = mode;
+      };
 
-     bool GetAirplaneMode() const {
-       return airplaneMode;
-     };
+      bool GetAirplaneMode() const {
+        return airplaneMode;
+      };
 
     private:
       Pinetime::Controllers::FS& fs;

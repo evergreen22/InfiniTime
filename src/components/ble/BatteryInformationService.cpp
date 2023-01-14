@@ -1,6 +1,7 @@
-#include "components/ble/BatteryInformationService.h"
 #include <nrf_log.h>
+
 #include "components/battery/BatteryController.h"
+#include "components/ble/BatteryInformationService.h"
 
 using namespace Pinetime::Controllers;
 
@@ -49,6 +50,7 @@ int BatteryInformationService::OnBatteryServiceRequested(uint16_t connectionHand
   }
   return 0;
 }
+
 void BatteryInformationService::NotifyBatteryLevel(uint16_t connectionHandle, uint8_t level) {
   auto* om = ble_hs_mbuf_from_flat(&level, 1);
   ble_gattc_notify_custom(connectionHandle, batteryLevelHandle, om);

@@ -1,5 +1,6 @@
-#include "components/ble/ImmediateAlertService.h"
 #include <cstring>
+
+#include "components/ble/ImmediateAlertService.h"
 #include "components/ble/NotificationManager.h"
 #include "systemtask/SystemTask.h"
 

@@ -1,6 +1,7 @@
-#include "components/ble/NotificationManager.h"
-#include <cstring>
 #include <algorithm>
+#include <cstring>
+
+#include "components/ble/NotificationManager.h"
 
 using namespace Pinetime::Controllers;
 

@@ -100,4 +100,3 @@ const char* DateTime::MonthShortToStringLow(Months month) {
 void DateTime::Register(Pinetime::System::SystemTask* systemTask) {
   this->systemTask = systemTask;
 }
-

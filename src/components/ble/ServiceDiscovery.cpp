@@ -1,6 +1,7 @@
-#include "components/ble/ServiceDiscovery.h"
 #include <libraries/log/nrf_log.h>
+
 #include "components/ble/BleClient.h"
+#include "components/ble/ServiceDiscovery.h"
 
 using namespace Pinetime::Controllers;
 

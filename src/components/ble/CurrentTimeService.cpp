@@ -1,6 +1,12 @@
-#include "components/ble/CurrentTimeService.h"
+/*
+ * Server for the BLE Current Time Service (CTS)
+ * Gadgetbridge does implement a CTS client
+ * NRFConnect does *NOT* implement CTS client
+ */
 #include <hal/nrf_rtc.h>
 #include <nrf_log.h>
+
+#include "components/ble/CurrentTimeService.h"
 
 using namespace Pinetime::Controllers;
 
@@ -55,7 +61,6 @@ int CurrentTimeService::OnTimeAccessed(uint16_t conn_handle, uint16_t attr_handl
 CurrentTimeService::CurrentTimeService(DateTime& dateTimeController)
   : characteristicDefinition {{.uuid = &ctChrUuid.u,
                                .access_cb = CTSCallback,
-
                                .arg = this,
                                .flags = BLE_GATT_CHR_F_WRITE | BLE_GATT_CHR_F_READ},
                               {0}},

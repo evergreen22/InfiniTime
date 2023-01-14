@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include <chrono>
+#include <cstdint>
 
 namespace Pinetime {
   namespace System {
@@ -35,25 +35,33 @@ namespace Pinetime {
                    uint8_t minute,
                    uint8_t second,
                    uint32_t systickCounter);
+
       void UpdateTime(uint32_t systickCounter);
+
       uint16_t Year() const {
         return year;
       }
+
       Months Month() const {
         return month;
       }
+
       uint8_t Day() const {
         return day;
       }
+
       Days DayOfWeek() const {
         return dayOfWeek;
       }
+
       uint8_t Hours() const {
         return hour;
       }
+
       uint8_t Minutes() const {
         return minute;
       }
+
       uint8_t Seconds() const {
         return second;
       }
@@ -65,6 +73,7 @@ namespace Pinetime {
       std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> CurrentDateTime() const {
         return currentDateTime;
       }
+
       std::chrono::seconds Uptime() const {
         return uptime;
       }

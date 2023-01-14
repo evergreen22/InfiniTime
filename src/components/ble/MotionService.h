@@ -1,10 +1,12 @@
 #pragma once
+
 #define min // workaround: nimble's min/max macros conflict with libstdc++
 #define max
 #include <host/ble_gap.h>
-#include <atomic>
 #undef max
 #undef min
+
+#include <atomic>
 
 namespace Pinetime {
   namespace System {

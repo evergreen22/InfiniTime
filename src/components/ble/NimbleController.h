@@ -7,6 +7,7 @@
 #include <host/ble_gap.h>
 #undef max
 #undef min
+
 #include "components/ble/AlertNotificationClient.h"
 #include "components/ble/AlertNotificationService.h"
 #include "components/ble/BatteryInformationService.h"
@@ -17,10 +18,10 @@
 #include "components/ble/FSService.h"
 #include "components/ble/HeartRateService.h"
 #include "components/ble/ImmediateAlertService.h"
+#include "components/ble/MotionService.h"
 #include "components/ble/MusicService.h"
 #include "components/ble/NavigationService.h"
 #include "components/ble/ServiceDiscovery.h"
-#include "components/ble/MotionService.h"
 #include "components/ble/weather/WeatherService.h"
 #include "components/fs/FS.h"
 
@@ -70,12 +71,15 @@ namespace Pinetime {
       Pinetime::Controllers::MusicService& music() {
         return musicService;
       };
+
       Pinetime::Controllers::NavigationService& navigation() {
         return navService;
       };
+
       Pinetime::Controllers::AlertNotificationService& alertService() {
         return anService;
       };
+
       Pinetime::Controllers::WeatherService& weather() {
         return weatherService;
       };

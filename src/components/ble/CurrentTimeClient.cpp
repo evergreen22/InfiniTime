@@ -1,6 +1,12 @@
-#include "components/ble/CurrentTimeClient.h"
+/*
+ * Client for the BLE Current Time Service (CTS)
+ * Gadgetbridge does *NOT* implement a CTS server
+ * NRFConnect does implement a CTS server
+ */
 #include <hal/nrf_rtc.h>
 #include <nrf_log.h>
+
+#include "components/ble/CurrentTimeClient.h"
 #include "components/datetime/DateTimeController.h"
 
 using namespace Pinetime::Controllers;
@@ -49,10 +55,9 @@ bool CurrentTimeClient::OnDiscoveryEvent(uint16_t connectionHandle, const ble_ga
 
   if (service != nullptr && ble_uuid_cmp(&ctsServiceUuid.u, &service->uuid.u) == 0) {
     NRF_LOG_INFO("CTS discovered : 0x%x - 0x%x", service->start_handle, service->end_handle);
-    isDiscovered = true;
     ctsStartHandle = service->start_handle;
     ctsEndHandle = service->end_handle;
-    return false;
+    isDiscovered = true;
   }
   return false;
 }

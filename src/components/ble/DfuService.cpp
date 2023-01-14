@@ -1,6 +1,7 @@
-#include "components/ble/DfuService.h"
 #include <cstring>
+
 #include "components/ble/BleController.h"
+#include "components/ble/DfuService.h"
 #include "drivers/SpiNorFlash.h"
 #include "systemtask/SystemTask.h"
 
