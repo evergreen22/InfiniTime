@@ -9,28 +9,28 @@ using namespace Pinetime;
 uint32_t BootloaderVersion::version = 0;
 char BootloaderVersion::versionString[BootloaderVersion::VERSION_STR_LEN] = "0.0.0";
 
-const uint32_t BootloaderVersion::Major() {
+uint32_t BootloaderVersion::Major() {
   return (BootloaderVersion::version >> 16u) & 0xff;
 }
 
-const uint32_t BootloaderVersion::Minor() {
+uint32_t BootloaderVersion::Minor() {
   return (BootloaderVersion::version >> 8u) & 0xff;
 }
 
-const uint32_t BootloaderVersion::Patch() {
+uint32_t BootloaderVersion::Patch() {
   return BootloaderVersion::version & 0xff;
 }
 
-const char* BootloaderVersion::VersionString() {
+char* BootloaderVersion::VersionString() {
   return BootloaderVersion::versionString;
 }
 
-const bool BootloaderVersion::IsValid() {
+bool BootloaderVersion::IsValid() {
   return BootloaderVersion::version >= 0x00010000;
 }
 
 void BootloaderVersion::SetVersion(uint32_t v) {
   BootloaderVersion::version = v;
-  snprintf(BootloaderVersion::versionString, BootloaderVersion::VERSION_STR_LEN, "%ld.%ld.%ld",
+  snprintf(BootloaderVersion::versionString, BootloaderVersion::VERSION_STR_LEN, "%lu.%lu.%lu",
            BootloaderVersion::Major(), BootloaderVersion::Minor(), BootloaderVersion::Patch());
 }
