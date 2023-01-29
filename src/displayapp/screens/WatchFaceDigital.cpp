@@ -111,11 +111,17 @@ void WatchFaceDigital::Refresh() {
   batteryPercentRemaining = batteryController.PercentRemaining();
   if (batteryPercentRemaining.IsUpdated()) {
     auto batteryPercent = batteryPercentRemaining.Get();
+    auto iconColor = LV_COLOR_RED;
     if (batteryPercent == 100) {
-      lv_obj_set_style_local_text_color(batteryIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GREEN);
-    } else {
-      lv_obj_set_style_local_text_color(batteryIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
+      iconColor = LV_COLOR_BLUE;
+    } else if (batteryPercent > 95) {
+      iconColor = LV_COLOR_GREEN;
+    } else if (batteryPercent > 70) {
+      iconColor = LV_COLOR_WHITE;
+    } else if (batteryPercent > 40) {
+      iconColor = LV_COLOR_YELLOW;
     }
+    lv_obj_set_style_local_text_color(batteryIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, iconColor);
     lv_label_set_text(batteryIcon, BatteryIcon::GetBatteryIcon(batteryPercent));
   }
 
@@ -133,7 +139,6 @@ void WatchFaceDigital::Refresh() {
   }
 
   currentDateTime = dateTimeController.CurrentDateTime();
-
   if (currentDateTime.IsUpdated()) {
     auto newDateTime = currentDateTime.Get();
 

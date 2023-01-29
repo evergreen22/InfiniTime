@@ -5,13 +5,13 @@
 using namespace Pinetime::Applications::Screens;
 
 const char* BatteryIcon::GetBatteryIcon(uint8_t batteryPercent) {
-  if (batteryPercent > 87)
+  if (batteryPercent > 95)
     return Symbols::batteryFull;
-  if (batteryPercent > 62)
+  if (batteryPercent > 70)
     return Symbols::batteryThreeQuarter;
-  if (batteryPercent > 37)
+  if (batteryPercent > 40)
     return Symbols::batteryHalf;
-  if (batteryPercent > 12)
+  if (batteryPercent > 25)
     return Symbols::batteryOneQuarter;
   return Symbols::batteryEmpty;
 }
