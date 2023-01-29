@@ -43,6 +43,7 @@ namespace Pinetime {
         uint8_t hour;
         uint8_t minute;
         uint8_t second;
+        uint8_t dow;
         uint8_t millis;
         uint8_t reason;
       } CtsData;

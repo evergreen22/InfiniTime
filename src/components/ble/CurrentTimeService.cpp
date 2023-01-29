@@ -29,7 +29,7 @@ void CurrentTimeService::Init() {
 
 int CurrentTimeService::OnTimeAccessed(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt* ctxt) {
 
-  NRF_LOG_INFO("Setting time...");
+  NRF_LOG_INFO("CTS server...");
 
   if (ctxt->op == BLE_GATT_ACCESS_OP_WRITE_CHR) {
     CtsData result;
@@ -39,17 +39,19 @@ int CurrentTimeService::OnTimeAccessed(uint16_t conn_handle, uint16_t attr_handl
       "Received data: %d-%d-%d %d:%d:%d", result.year, result.month, result.dayofmonth, result.hour, result.minute, result.second);
 
     m_dateTimeController.SetTime(
-      result.year, result.month, result.dayofmonth, 0, result.hour, result.minute, result.second, nrf_rtc_counter_get(portNRF_RTC_REG));
+      result.year, result.month, result.dayofmonth, result.dow, result.hour, result.minute, result.second, nrf_rtc_counter_get(portNRF_RTC_REG));
 
   } else if (ctxt->op == BLE_GATT_ACCESS_OP_READ_CHR) {
     CtsData currentDateTime;
     currentDateTime.year = m_dateTimeController.Year();
-    currentDateTime.month = static_cast<u_int8_t>(m_dateTimeController.Month());
+    currentDateTime.month = static_cast<uint8_t>(m_dateTimeController.Month());
     currentDateTime.dayofmonth = m_dateTimeController.Day();
     currentDateTime.hour = m_dateTimeController.Hours();
     currentDateTime.minute = m_dateTimeController.Minutes();
     currentDateTime.second = m_dateTimeController.Seconds();
+    currentDateTime.dow = static_cast<uint8_t>(m_dateTimeController.DayOfWeek());
     currentDateTime.millis = 0;
+    currentDateTime.reason = 0;
 
     int res = os_mbuf_append(ctxt->om, &currentDateTime, sizeof(CtsData));
     return (res == 0) ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
