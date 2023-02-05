@@ -358,13 +358,13 @@ set(LVGL_SRC
         libs/lvgl/src/lv_widgets/lv_win.c
         )
 
-set(QCBOR_SRC
-        libs/QCBOR/src/ieee754.c
-        libs/QCBOR/src/qcbor_decode.c
-        libs/QCBOR/src/qcbor_encode.c
-        libs/QCBOR/src/qcbor_err_to_str.c
-        libs/QCBOR/src/UsefulBuf.c
-        )
+#set(QCBOR_SRC
+#        libs/QCBOR/src/ieee754.c
+#        libs/QCBOR/src/qcbor_decode.c
+#        libs/QCBOR/src/qcbor_encode.c
+#        libs/QCBOR/src/qcbor_err_to_str.c
+#        libs/QCBOR/src/UsefulBuf.c
+#        )
 
 list(APPEND IMAGE_FILES
         displayapp/icons/battery/os_battery_error.c
@@ -858,23 +858,23 @@ target_compile_options(lvgl PRIVATE
         )
 
 # QCBOR
-add_library(QCBOR STATIC ${QCBOR_SRC})
-target_include_directories(QCBOR SYSTEM PUBLIC libs/QCBOR/inc)
-# This is required with the current configuration
-target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_FLOAT_HW_USE)
-# These are for space-saving
-target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_PREFERRED_FLOAT)
-target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_EXP_AND_MANTISSA)
-target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_INDEFINITE_LENGTH_STRINGS)
-#target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_INDEFINITE_LENGTH_ARRAYS)
-target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_UNCOMMON_TAGS)
-target_compile_definitions(QCBOR PUBLIC USEFULBUF_CONFIG_LITTLE_ENDIAN)
-set_target_properties(QCBOR PROPERTIES LINKER_LANGUAGE C)
-target_compile_options(QCBOR PRIVATE
-        $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
-        $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:RELEASE>>: ${COMMON_FLAGS} -O3>
-        $<$<COMPILE_LANGUAGE:ASM>: -MP -MD -x assembler-with-cpp>
-        )
+#add_library(QCBOR STATIC ${QCBOR_SRC})
+#target_include_directories(QCBOR SYSTEM PUBLIC libs/QCBOR/inc)
+## This is required with the current configuration
+#target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_FLOAT_HW_USE)
+## These are for space-saving
+#target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_PREFERRED_FLOAT)
+#target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_EXP_AND_MANTISSA)
+#target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_INDEFINITE_LENGTH_STRINGS)
+##target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_INDEFINITE_LENGTH_ARRAYS)
+#target_compile_definitions(QCBOR PUBLIC QCBOR_DISABLE_UNCOMMON_TAGS)
+#target_compile_definitions(QCBOR PUBLIC USEFULBUF_CONFIG_LITTLE_ENDIAN)
+#set_target_properties(QCBOR PROPERTIES LINKER_LANGUAGE C)
+#target_compile_options(QCBOR PRIVATE
+#        $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
+#        $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:RELEASE>>: ${COMMON_FLAGS} -O3>
+#        $<$<COMPILE_LANGUAGE:ASM>: -MP -MD -x assembler-with-cpp>
+#        )
 
 # LITTLEFS_SRC
 add_library(littlefs STATIC ${LITTLEFS_SRC})
@@ -894,7 +894,8 @@ set(EXECUTABLE_FILE_NAME ${EXECUTABLE_NAME}-${pinetime_VERSION_MAJOR}.${pinetime
 set(NRF5_LINKER_SCRIPT "${CMAKE_SOURCE_DIR}/gcc_nrf52.ld")
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 set_target_properties(${EXECUTABLE_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_FILE_NAME})
-target_link_libraries(${EXECUTABLE_NAME} nimble nrf-sdk lvgl littlefs QCBOR)
+#target_link_libraries(${EXECUTABLE_NAME} nimble nrf-sdk lvgl littlefs QCBOR)
+target_link_libraries(${EXECUTABLE_NAME} nimble nrf-sdk lvgl littlefs)
 target_compile_options(${EXECUTABLE_NAME} PUBLIC
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -Wextra -Wformat -Wno-missing-field-initializers -Wno-unused-parameter -Og -g3>
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:RELEASE>>: ${COMMON_FLAGS} -Wextra -Wformat -Wno-missing-field-initializers -Wno-unused-parameter -Os>
@@ -923,7 +924,8 @@ set(IMAGE_MCUBOOT_FILE_NAME ${EXECUTABLE_MCUBOOT_NAME}-image-${pinetime_VERSION_
 set(DFU_MCUBOOT_FILE_NAME ${EXECUTABLE_MCUBOOT_NAME}-dfu-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH}.zip)
 set(NRF5_LINKER_SCRIPT_MCUBOOT "${CMAKE_SOURCE_DIR}/gcc_nrf52-mcuboot.ld")
 add_executable(${EXECUTABLE_MCUBOOT_NAME} ${SOURCE_FILES})
-target_link_libraries(${EXECUTABLE_MCUBOOT_NAME} nimble nrf-sdk lvgl littlefs QCBOR)
+#target_link_libraries(${EXECUTABLE_MCUBOOT_NAME} nimble nrf-sdk lvgl littlefs QCBOR)
+target_link_libraries(${EXECUTABLE_MCUBOOT_NAME} nimble nrf-sdk lvgl littlefs)
 set_target_properties(${EXECUTABLE_MCUBOOT_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_MCUBOOT_FILE_NAME})
 target_compile_options(${EXECUTABLE_MCUBOOT_NAME} PUBLIC
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -Og -g3>
@@ -959,7 +961,8 @@ endif()
 set(EXECUTABLE_RECOVERY_NAME "pinetime-recovery")
 set(EXECUTABLE_RECOVERY_FILE_NAME ${EXECUTABLE_RECOVERY_NAME}-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH})
 add_executable(${EXECUTABLE_RECOVERY_NAME} ${RECOVERY_SOURCE_FILES})
-target_link_libraries(${EXECUTABLE_RECOVERY_NAME} nimble nrf-sdk littlefs QCBOR)
+#target_link_libraries(${EXECUTABLE_RECOVERY_NAME} nimble nrf-sdk littlefs QCBOR)
+target_link_libraries(${EXECUTABLE_RECOVERY_NAME} nimble nrf-sdk littlefs)
 set_target_properties(${EXECUTABLE_RECOVERY_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_RECOVERY_FILE_NAME})
 target_compile_definitions(${EXECUTABLE_RECOVERY_NAME} PUBLIC "PINETIME_IS_RECOVERY")
 target_compile_options(${EXECUTABLE_RECOVERY_NAME} PUBLIC
@@ -989,7 +992,8 @@ set(EXECUTABLE_RECOVERY_MCUBOOT_FILE_NAME ${EXECUTABLE_RECOVERY_MCUBOOT_NAME}-${
 set(IMAGE_RECOVERY_MCUBOOT_FILE_NAME ${EXECUTABLE_RECOVERY_MCUBOOT_NAME}-image-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH}.bin)
 set(DFU_RECOVERY_MCUBOOT_FILE_NAME ${EXECUTABLE_RECOVERY_MCUBOOT_NAME}-dfu-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH}.zip)
 add_executable(${EXECUTABLE_RECOVERY_MCUBOOT_NAME} ${RECOVERY_SOURCE_FILES})
-target_link_libraries(${EXECUTABLE_RECOVERY_MCUBOOT_NAME} nimble nrf-sdk littlefs QCBOR)
+#target_link_libraries(${EXECUTABLE_RECOVERY_MCUBOOT_NAME} nimble nrf-sdk littlefs QCBOR)
+target_link_libraries(${EXECUTABLE_RECOVERY_MCUBOOT_NAME} nimble nrf-sdk littlefs)
 set_target_properties(${EXECUTABLE_RECOVERY_MCUBOOT_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_RECOVERY_MCUBOOT_FILE_NAME})
 target_compile_definitions(${EXECUTABLE_RECOVERY_MCUBOOT_NAME} PUBLIC "PINETIME_IS_RECOVERY")
 target_compile_options(${EXECUTABLE_RECOVERY_MCUBOOT_NAME} PUBLIC
@@ -1027,7 +1031,8 @@ endif()
 set(EXECUTABLE_RECOVERYLOADER_NAME "pinetime-recovery-loader")
 set(EXECUTABLE_RECOVERYLOADER_FILE_NAME ${EXECUTABLE_RECOVERYLOADER_NAME}-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH})
 add_executable(${EXECUTABLE_RECOVERYLOADER_NAME} ${RECOVERYLOADER_SOURCE_FILES})
-target_link_libraries(${EXECUTABLE_RECOVERYLOADER_NAME} nrf-sdk QCBOR)
+#target_link_libraries(${EXECUTABLE_RECOVERYLOADER_NAME} nrf-sdk QCBOR)
+target_link_libraries(${EXECUTABLE_RECOVERYLOADER_NAME} nrf-sdk)
 set_target_properties(${EXECUTABLE_RECOVERYLOADER_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_RECOVERYLOADER_FILE_NAME})
 target_compile_options(${EXECUTABLE_RECOVERYLOADER_NAME} PUBLIC
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -Og -g3>
@@ -1060,7 +1065,8 @@ set(EXECUTABLE_MCUBOOT_RECOVERYLOADER_FILE_NAME ${EXECUTABLE_MCUBOOT_RECOVERYLOA
 set(IMAGE_MCUBOOT_RECOVERYLOADER_FILE_NAME ${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME}-image-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH}.bin)
 set(DFU_MCUBOOT_RECOVERYLOADER_FILE_NAME ${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME}-dfu-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH}.zip)
 add_executable(${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME} ${RECOVERYLOADER_SOURCE_FILES})
-target_link_libraries(${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME} nrf-sdk QCBOR)
+#target_link_libraries(${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME} nrf-sdk QCBOR)
+target_link_libraries(${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME} nrf-sdk)
 set_target_properties(${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_MCUBOOT_RECOVERYLOADER_FILE_NAME})
 target_compile_options(${EXECUTABLE_MCUBOOT_RECOVERYLOADER_NAME} PUBLIC
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -Og -g3>
