@@ -27,8 +27,6 @@ namespace Pinetime {
         StopRinging,
         MeasureBatteryTimerExpired,
         BatteryPercentageUpdated,
-        StartFileTransfer,
-        StopFileTransfer,
         AirplaneModeToggle
       };
     }

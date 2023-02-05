@@ -46,13 +46,11 @@ NimbleController::NimbleController(Pinetime::System::SystemTask& systemTask,
     alertNotificationClient {systemTask, notificationManager},
     currentTimeService {dateTimeController},
     musicService {systemTask},
-    weatherService {systemTask, dateTimeController},
     navService {systemTask},
     batteryInformationService {batteryController},
     immediateAlertService {systemTask, notificationManager},
     heartRateService {systemTask, heartRateController},
     motionService {systemTask, motionController},
-    fsService {systemTask, fs},
     serviceDiscovery({&currentTimeClient, &alertNotificationClient}) {
 }
 
@@ -88,7 +86,6 @@ void NimbleController::Init() {
   currentTimeClient.Init();
   currentTimeService.Init();
   musicService.Init();
-  weatherService.Init();
   navService.Init();
   anService.Init();
   dfuService.Init();
@@ -96,7 +93,6 @@ void NimbleController::Init() {
   immediateAlertService.Init();
   heartRateService.Init();
   motionService.Init();
-  fsService.Init();
 
   int rc;
   rc = ble_hs_util_ensure_addr(0);
