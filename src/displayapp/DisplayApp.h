@@ -4,7 +4,7 @@
 #include <queue.h>
 #include <task.h>
 #include <memory>
-#include <systemtask/Messages.h>
+#include "systemtask/Messages.h"
 #include "displayapp/Apps.h"
 #include "displayapp/LittleVgl.h"
 #include "displayapp/TouchEvents.h"

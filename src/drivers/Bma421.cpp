@@ -2,7 +2,7 @@
 #include <libraries/delay/nrf_delay.h>
 #include <libraries/log/nrf_log.h>
 #include "drivers/TwiMaster.h"
-#include <drivers/Bma421_C/bma423.h>
+#include "drivers/Bma421_C/bma423.h"
 
 using namespace Pinetime::Drivers;
 

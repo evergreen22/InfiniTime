@@ -1,6 +1,6 @@
 #include "components/heartrate/HeartRateController.h"
-#include <heartratetask/HeartRateTask.h>
-#include <systemtask/SystemTask.h>
+#include "heartratetask/HeartRateTask.h"
+#include "systemtask/SystemTask.h"
 
 using namespace Pinetime::Controllers;
 

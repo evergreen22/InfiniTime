@@ -4,7 +4,7 @@
 #include <chrono>
 #include <cstdint>
 #include <memory>
-#include <components/heartrate/HeartRateController.h>
+#include "components/heartrate/HeartRateController.h"
 #include "displayapp/screens/Screen.h"
 #include "components/datetime/DateTimeController.h"
 

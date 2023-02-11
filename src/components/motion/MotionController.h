@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cstdint>
-#include <drivers/Bma421.h>
-#include <components/ble/MotionService.h>
+#include "drivers/Bma421.h"
+#include "components/ble/MotionService.h"
 
 namespace Pinetime {
   namespace Controllers {

@@ -26,8 +26,8 @@
 #include <FreeRTOS.h>
 #include <task.h>
 #include <timers.h>
-#include <drivers/Hrs3300.h>
-#include <drivers/Bma421.h>
+#include "drivers/Hrs3300.h"
+#include "drivers/Bma421.h"
 
 #include "BootloaderVersion.h"
 #include "components/battery/BatteryController.h"

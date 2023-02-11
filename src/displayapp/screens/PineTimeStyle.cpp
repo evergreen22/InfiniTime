@@ -23,7 +23,7 @@
 #include <date/date.h>
 #include <lvgl/lvgl.h>
 #include <cstdio>
-#include <displayapp/Colors.h>
+#include "displayapp/Colors.h"
 #include "displayapp/screens/BatteryIcon.h"
 #include "displayapp/screens/BleIcon.h"
 #include "displayapp/screens/NotificationIcon.h"

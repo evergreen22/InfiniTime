@@ -5,11 +5,11 @@
 #include <FreeRTOS.h>
 #include <task.h>
 #include <timers.h>
-#include <heartratetask/HeartRateTask.h>
-#include <components/settings/Settings.h>
-#include <drivers/Bma421.h>
-#include <drivers/PinMap.h>
-#include <components/motion/MotionController.h>
+#include "heartratetask/HeartRateTask.h"
+#include "components/settings/Settings.h"
+#include "drivers/Bma421.h"
+#include "drivers/PinMap.h"
+#include "components/motion/MotionController.h"
 
 #include "systemtask/SystemMonitor.h"
 #include "components/battery/BatteryController.h"

@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <lvgl/lvgl.h>
 #include "displayapp/screens/Screen.h"
-#include <components/motion/MotionController.h>
+#include "components/motion/MotionController.h"
 
 namespace Pinetime {
 

@@ -1,8 +1,8 @@
 #include <legacy/nrf_drv_clock.h>
 #include <softdevice/common/nrf_sdh.h>
-#include <drivers/SpiMaster.h>
-#include <drivers/Spi.h>
-#include <drivers/SpiNorFlash.h>
+#include "drivers/SpiMaster.h"
+#include "drivers/Spi.h"
+#include "drivers/SpiNorFlash.h"
 #include <libraries/log/nrf_log.h>
 #include <FreeRTOS.h>
 #include <task.h>
@@ -10,9 +10,9 @@
 #include <libraries/gpiote/app_gpiote.h>
 #include <hal/nrf_wdt.h>
 #include <cstring>
-#include <components/gfx/Gfx.h>
-#include <drivers/St7789.h>
-#include <components/brightness/BrightnessController.h>
+#include "components/gfx/Gfx.h"
+#include "drivers/St7789.h"
+#include "components/brightness/BrightnessController.h"
 #include <algorithm>
 #include "recoveryImage.h"
 #include "drivers/PinMap.h"

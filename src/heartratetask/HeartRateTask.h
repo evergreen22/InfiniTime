@@ -2,7 +2,7 @@
 #include <FreeRTOS.h>
 #include <task.h>
 #include <queue.h>
-#include <components/heartrate/Ppg.h>
+#include "components/heartrate/Ppg.h"
 
 namespace Pinetime {
   namespace Drivers {

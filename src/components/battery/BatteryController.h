@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
-#include <drivers/include/nrfx_saadc.h>
-#include <systemtask/SystemTask.h>
+#include "drivers/include/nrfx_saadc.h"
+#include "systemtask/SystemTask.h"
 
 namespace Pinetime {
   namespace Controllers {

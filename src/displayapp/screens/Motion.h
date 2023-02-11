@@ -6,7 +6,7 @@
 #include <bits/unique_ptr.h>
 #include <lvgl/src/lv_core/lv_style.h>
 #include <lvgl/src/lv_core/lv_obj.h>
-#include <components/motion/MotionController.h>
+#include "components/motion/MotionController.h"
 
 namespace Pinetime {
   namespace Applications {
