@@ -6,5 +6,5 @@ const char* NotificationIcon::GetIcon(bool newNotificationAvailable) {
   if (newNotificationAvailable)
     return Symbols::info;
   else
-    return "";
+    return Symbols::none;
 }
