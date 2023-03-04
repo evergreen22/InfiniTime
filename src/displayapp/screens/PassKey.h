@@ -11,10 +11,6 @@ namespace Pinetime {
       public:
         PassKey(DisplayApp* app, uint32_t key);
         ~PassKey() override;
-
-      private:
-        lv_obj_t* passkeyLabel;
-        lv_obj_t* backgroundLabel;
       };
     }
   }
