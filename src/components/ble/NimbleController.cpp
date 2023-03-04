@@ -400,11 +400,11 @@ void NimbleController::PersistBond(struct ble_gap_conn_desc& desc) {
   key.sec.peer_addr = desc.peer_id_addr;
   rc = ble_store_read_our_sec(&key.sec, &our_sec.sec);
 
-  if (memcmp(&our_sec.sec, &bondId, sizeof bondId) == 0) {
+  if (memcmp(&our_sec.sec.peer_addr.val, &bondId, sizeof bondId) == 0) {
     return;
   }
 
-  memcpy(&bondId, &our_sec.sec, sizeof bondId);
+  memcpy(&bondId, &our_sec.sec.peer_addr.val, sizeof bondId);
 
   memset(&key, 0, sizeof key);
   memset(&peer_sec, 0, sizeof peer_sec);

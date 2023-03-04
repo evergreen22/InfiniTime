@@ -116,7 +116,7 @@ namespace Pinetime {
       uint8_t addrType;
       uint16_t connectionHandle = BLE_HS_CONN_HANDLE_NONE;
       uint8_t fastAdvCount = 0;
-      uint8_t bondId[16] = {0};
+      uint8_t bondId[6] = {0};
 
       ble_uuid128_t dfuServiceUuid {
         .u {.type = BLE_UUID_TYPE_128},
