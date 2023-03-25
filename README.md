@@ -10,13 +10,13 @@ The objectives of this personal version are:
 [] Remove unused features
 [] Remove incomplete/broken features
 [] Remove unwanted features
-[] Refactor code to fix defects and improve clarity
-[] Improve legibility of notifications
-[] Improve Bluetooth standards compliance
+[X] Refactor code to fix defects and improve clarity
+[X] Improve legibility of notifications
+[X] Improve Bluetooth standards compliance
 [X] Require Bluetooth encryption
-[] Bond the Bluetooth connection between the watch and companion
-[] Require authentication for bonding
-[] Enable Bluetooth privacy features
+[X] Bond the Bluetooth connection between the watch and companion
+[X] Require authentication for bonding
+[X] Enable Bluetooth privacy features
 [] Prevent arbitrary Bluetooth connections
 [] Update Nimble to latest release and track as a submodule
 [] Create custom watchface
