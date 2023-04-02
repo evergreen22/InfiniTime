@@ -107,7 +107,7 @@ void NimbleController::Init() {
   rc = ble_hs_id_copy_addr(addrType, address.data(), nullptr);
   ASSERT(rc == 0);
 
-  bleController.Address(std::move(address));
+  bleController.Address(address);
   switch (addrType) {
     case BLE_OWN_ADDR_PUBLIC:
       bleController.AddressType(Ble::AddressTypes::Public);

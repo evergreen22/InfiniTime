@@ -40,7 +40,7 @@ namespace Pinetime {
         return firmwareUpdateState;
       }
 
-      void Address(BleAddress&& addr) {
+      void Address(BleAddress& addr) {
         address = addr;
       }
       const BleAddress& Address() const {
