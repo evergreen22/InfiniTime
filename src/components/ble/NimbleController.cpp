@@ -144,12 +144,12 @@ void NimbleController::StartAdvertising() {
   adv_params.disc_mode = BLE_GAP_DISC_MODE_GEN;
   /* fast advertise for 30 sec */
   if (fastAdvCount < 15) {
-    adv_params.itvl_min = 32;
-    adv_params.itvl_max = 47;
+    adv_params.itvl_min = BLE_GAP_ADV_FAST_INTERVAL1_MIN;
+    adv_params.itvl_max = BLE_GAP_ADV_FAST_INTERVAL1_MAX;
     fastAdvCount++;
   } else {
-    adv_params.itvl_min = 1636;
-    adv_params.itvl_max = 1651;
+    adv_params.itvl_min = BLE_GAP_SCAN_ITVL_MS(1000);
+    adv_params.itvl_max = BLE_GAP_SCAN_ITVL_MS(1200);
   }
 
   fields.flags = BLE_HS_ADV_F_DISC_GEN | BLE_HS_ADV_F_BREDR_UNSUP;
