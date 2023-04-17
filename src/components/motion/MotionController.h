@@ -19,18 +19,22 @@ namespace Pinetime {
       int16_t X() const {
         return x;
       }
+
       int16_t Y() const {
         return y;
       }
+
       int16_t Z() const {
         return z;
       }
+
       uint32_t NbSteps() const {
         return nbSteps;
       }
-      bool ShouldWakeUp(bool isSleeping);
 
+      bool ShouldWakeUp(bool isSleeping);
       void IsSensorOk(bool isOk);
+
       bool IsSensorOk() const {
         return isSensorOk;
       }
