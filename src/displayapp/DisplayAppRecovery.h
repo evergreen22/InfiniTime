@@ -20,7 +20,7 @@ namespace Pinetime {
   namespace Drivers {
     class St7789;
     class Cst816S;
-    class WatchdogView;
+    class Watchdog;
   }
   namespace Controllers {
     class Settings;
@@ -49,7 +49,7 @@ namespace Pinetime {
                  Controllers::Battery& batteryController,
                  Controllers::Ble& bleController,
                  Controllers::DateTime& dateTimeController,
-                 Drivers::WatchdogView& watchdog,
+                 const Drivers::Watchdog& watchdog,
                  Pinetime::Controllers::NotificationManager& notificationManager,
                  Pinetime::Controllers::HeartRateController& heartRateController,
                  Controllers::Settings& settingsController,

@@ -103,7 +103,6 @@ Pinetime::Applications::HeartRateTask heartRateApp(heartRateSensor, heartRateCon
 
 Pinetime::Controllers::DateTime dateTimeController;
 Pinetime::Drivers::Watchdog watchdog;
-Pinetime::Drivers::WatchdogView watchdogView(watchdog);
 Pinetime::Controllers::NotificationManager notificationManager;
 Pinetime::Controllers::MotionController motionController;
 Pinetime::Controllers::TimerController timerController;
@@ -121,7 +120,7 @@ Pinetime::Applications::DisplayApp displayApp(lcd,
                                               batteryController,
                                               bleController,
                                               dateTimeController,
-                                              watchdogView,
+                                              watchdog,
                                               notificationManager,
                                               heartRateController,
                                               settingsController,
