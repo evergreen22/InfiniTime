@@ -129,9 +129,9 @@ void SystemTask::Process(void* instance) {
 void SystemTask::Work() {
   BootErrors bootError = BootErrors::None;
 
-  watchdog.Setup(7);
+  watchdog.Setup(9, Drivers::Watchdog::SleepBehaviour::Run, Drivers::Watchdog::HaltBehaviour::Pause);
   watchdog.Start();
-  NRF_LOG_INFO("Last reset reason : %s", Pinetime::Drivers::Watchdog::ResetReasonToString(watchdog.ResetReason()));
+  NRF_LOG_INFO("Last reset reason : %s", watchdog.GetResetReasonString());
   APP_GPIOTE_INIT(2);
 
   app_timer_init();

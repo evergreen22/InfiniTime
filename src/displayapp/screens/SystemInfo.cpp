@@ -97,33 +97,7 @@ std::unique_ptr<Screen> SystemInfo::CreateScreen1() {
 }
 
 std::unique_ptr<Screen> SystemInfo::CreateScreen2() {
-  auto batteryPercent = batteryController.PercentRemaining();
-  auto resetReason = [this]() {
-    switch (watchdog.ResetReason()) {
-      case Drivers::Watchdog::ResetReasons::Watchdog:
-        return "wtdg";
-      case Drivers::Watchdog::ResetReasons::HardReset:
-        return "hardr";
-      case Drivers::Watchdog::ResetReasons::NFC:
-        return "nfc";
-      case Drivers::Watchdog::ResetReasons::SoftReset:
-        return "softr";
-      case Drivers::Watchdog::ResetReasons::CpuLockup:
-        return "cpulock";
-      case Drivers::Watchdog::ResetReasons::SystemOff:
-        return "off";
-      case Drivers::Watchdog::ResetReasons::LpComp:
-        return "lpcomp";
-      case Drivers::Watchdog::ResetReasons::DebugInterface:
-        return "dbg";
-      case Drivers::Watchdog::ResetReasons::ResetPin:
-        return "rst";
-      default:
-        return "?";
-    }
-  }();
-
-  // uptime
+  // uptime - TODO handle more than 100 days of uptime
   static constexpr uint32_t secondsInADay = 60 * 60 * 24;
   static constexpr uint32_t secondsInAnHour = 60 * 60;
   static constexpr uint32_t secondsInAMinute = 60;
@@ -134,7 +108,6 @@ std::unique_ptr<Screen> SystemInfo::CreateScreen2() {
   uptimeSeconds = uptimeSeconds % secondsInAnHour;
   uint32_t uptimeMinutes = uptimeSeconds / secondsInAMinute;
   uptimeSeconds = uptimeSeconds % secondsInAMinute;
-  // TODO handle more than 100 days of uptime
 
   lv_obj_t* label = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_recolor(label, true);
@@ -157,10 +130,10 @@ std::unique_ptr<Screen> SystemInfo::CreateScreen2() {
                         uptimeHours,
                         uptimeMinutes,
                         uptimeSeconds,
-                        batteryPercent,
+                        batteryController.PercentRemaining(),
                         batteryController.Voltage(),
                         brightnessController.ToString(),
-                        resetReason,
+                        watchdog.GetResetReasonString(),
                         ToString(motionController.DeviceType()),
                         touchPanel.GetChipId(),
                         touchPanel.GetVendorId(),
