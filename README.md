@@ -1,6 +1,6 @@
-## My Personal Version of InfiniTime
+## Personal Version of InfiniTime
 
-This repository is a fork of the InfiniTime firmware for the PineTime watch. The [InfiniTime README](infinitime-README.md) in this fork details the watch firmware project at the the point in time when this fork and upstream diverged.
+This repository is a fork of the [InfiniTime firmware](https://github.com/Infinitime) for the PineTime watch. The [InfiniTime README](infinitime-README.md) in this fork details the watch firmware project at the the point in time when this fork and upstream diverged.
 
 The objectives of this personal version are:
 
