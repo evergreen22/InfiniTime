@@ -45,6 +45,7 @@ void Hrs3300::Enable() {
   auto value = ReadRegister(static_cast<uint8_t>(Registers::Enable));
   value |= 0x80;
   WriteRegister(static_cast<uint8_t>(Registers::Enable), value);
+  WriteRegister(static_cast<uint8_t>(Registers::PDriver), 0x6E);
 }
 
 void Hrs3300::Disable() {
@@ -52,6 +53,7 @@ void Hrs3300::Disable() {
   auto value = ReadRegister(static_cast<uint8_t>(Registers::Enable));
   value &= ~0x80;
   WriteRegister(static_cast<uint8_t>(Registers::Enable), value);
+  WriteRegister(static_cast<uint8_t>(Registers::PDriver), 0);
 }
 
 uint16_t Hrs3300::ReadHrs() {
