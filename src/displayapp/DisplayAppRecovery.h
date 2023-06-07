@@ -45,19 +45,19 @@ namespace Pinetime {
     public:
       DisplayApp(Drivers::St7789& lcd,
                  Components::LittleVgl& lvgl,
-                 Drivers::Cst816S&,
-                 Controllers::Battery& batteryController,
-                 Controllers::Ble& bleController,
+                 const Drivers::Cst816S&,
+                 const Controllers::Battery& batteryController,
+                 constControllers::Ble& bleController,
                  Controllers::DateTime& dateTimeController,
                  const Drivers::Watchdog& watchdog,
-                 Pinetime::Controllers::NotificationManager& notificationManager,
-                 Pinetime::Controllers::HeartRateController& heartRateController,
+                 Controllers::NotificationManager& notificationManager,
+                 Controllers::HeartRateController& heartRateController,
                  Controllers::Settings& settingsController,
-                 Pinetime::Controllers::MotorController& motorController,
-                 Pinetime::Controllers::MotionController& motionController,
-                 Pinetime::Controllers::TimerController& timerController,
-                 Pinetime::Controllers::AlarmController& alarmController,
-                 Pinetime::Controllers::TouchHandler& touchHandler);
+                 Controllers::MotorController& motorController,
+                 Controllers::MotionController& motionController,
+                 Controllers::TimerController& timerController,
+                 Controllers::AlarmController& alarmController,
+                 Controllers::TouchHandler& touchHandler);
       void Start();
       void Start(Pinetime::System::BootErrors){ Start(); };
       void PushMessage(Pinetime::Applications::Display::Messages msg);
@@ -70,8 +70,8 @@ namespace Pinetime {
       void DisplayOtaProgress(uint8_t percent, uint16_t color);
       void InitHw();
       void Refresh();
-      Pinetime::Drivers::St7789& lcd;
-      Controllers::Ble& bleController;
+      Drivers::St7789& lcd;
+      const Controllers::Ble& bleController;
 
       static constexpr uint8_t queueSize = 10;
       static constexpr uint8_t itemSize = 1;

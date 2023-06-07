@@ -23,24 +23,24 @@ namespace Pinetime {
       class SystemInfo : public Screen {
       public:
         explicit SystemInfo(DisplayApp* app,
-                            Pinetime::Controllers::DateTime& dateTimeController,
-                            Pinetime::Controllers::Battery& batteryController,
-                            Pinetime::Controllers::BrightnessController& brightnessController,
-                            Pinetime::Controllers::Ble& bleController,
-                            const Pinetime::Drivers::Watchdog& watchdog,
-                            Pinetime::Controllers::MotionController& motionController,
-                            Pinetime::Drivers::Cst816S& touchPanel);
+                            Controllers::DateTime& dateTimeController,
+                            const Controllers::Battery& batteryController,
+                            Controllers::BrightnessController& brightnessController,
+                            const Controllers::Ble& bleController,
+                            const Drivers::Watchdog& watchdog,
+                            Controllers::MotionController& motionController,
+                            const Drivers::Cst816S& touchPanel);
         ~SystemInfo() override;
         bool OnTouchEvent(TouchEvents event) override;
 
       private:
-        Pinetime::Controllers::DateTime& dateTimeController;
-        Pinetime::Controllers::Battery& batteryController;
-        Pinetime::Controllers::BrightnessController& brightnessController;
-        Pinetime::Controllers::Ble& bleController;
-        const Pinetime::Drivers::Watchdog& watchdog;
-        Pinetime::Controllers::MotionController& motionController;
-        Pinetime::Drivers::Cst816S& touchPanel;
+        Controllers::DateTime& dateTimeController;
+        const Controllers::Battery& batteryController;
+        Controllers::BrightnessController& brightnessController;
+        const Controllers::Ble& bleController;
+        const Drivers::Watchdog& watchdog;
+        Controllers::MotionController& motionController;
+        const Drivers::Cst816S& touchPanel;
 
         ScreenList<5> screens;
 

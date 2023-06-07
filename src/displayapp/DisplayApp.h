@@ -49,19 +49,19 @@ namespace Pinetime {
 
       DisplayApp(Drivers::St7789& lcd,
                  Components::LittleVgl& lvgl,
-                 Drivers::Cst816S&,
-                 Controllers::Battery& batteryController,
-                 Controllers::Ble& bleController,
+                 const Drivers::Cst816S&,
+                 const Controllers::Battery& batteryController,
+                 const Controllers::Ble& bleController,
                  Controllers::DateTime& dateTimeController,
                  const Drivers::Watchdog& watchdog,
-                 Pinetime::Controllers::NotificationManager& notificationManager,
-                 Pinetime::Controllers::HeartRateController& heartRateController,
+                 Controllers::NotificationManager& notificationManager,
+                 Controllers::HeartRateController& heartRateController,
                  Controllers::Settings& settingsController,
-                 Pinetime::Controllers::MotorController& motorController,
-                 Pinetime::Controllers::MotionController& motionController,
-                 Pinetime::Controllers::TimerController& timerController,
-                 Pinetime::Controllers::AlarmController& alarmController,
-                 Pinetime::Controllers::TouchHandler& touchHandler);
+                 Controllers::MotorController& motorController,
+                 Controllers::MotionController& motionController,
+                 Controllers::TimerController& timerController,
+                 Controllers::AlarmController& alarmController,
+                 Controllers::TouchHandler& touchHandler);
       void Start(System::BootErrors error);
       void PushMessage(Display::Messages msg);
 
@@ -72,24 +72,24 @@ namespace Pinetime {
       void Register(Pinetime::System::SystemTask* systemTask);
 
     private:
-      Pinetime::Drivers::St7789& lcd;
-      Pinetime::Components::LittleVgl& lvgl;
-      Pinetime::Drivers::Cst816S& touchPanel;
-      Pinetime::Controllers::Battery& batteryController;
-      Pinetime::Controllers::Ble& bleController;
-      Pinetime::Controllers::DateTime& dateTimeController;
-      const Pinetime::Drivers::Watchdog& watchdog;
-      Pinetime::System::SystemTask* systemTask = nullptr;
-      Pinetime::Controllers::NotificationManager& notificationManager;
-      Pinetime::Controllers::HeartRateController& heartRateController;
-      Pinetime::Controllers::Settings& settingsController;
-      Pinetime::Controllers::MotorController& motorController;
-      Pinetime::Controllers::MotionController& motionController;
-      Pinetime::Controllers::TimerController& timerController;
-      Pinetime::Controllers::AlarmController& alarmController;
-      Pinetime::Controllers::TouchHandler& touchHandler;
+      Drivers::St7789& lcd;
+      Components::LittleVgl& lvgl;
+      const Drivers::Cst816S& touchPanel;
+      const Controllers::Battery& batteryController;
+      const Controllers::Ble& bleController;
+      Controllers::DateTime& dateTimeController;
+      const Drivers::Watchdog& watchdog;
+      System::SystemTask* systemTask = nullptr;
+      Controllers::NotificationManager& notificationManager;
+      Controllers::HeartRateController& heartRateController;
+      Controllers::Settings& settingsController;
+      Controllers::MotorController& motorController;
+      Controllers::MotionController& motionController;
+      Controllers::TimerController& timerController;
+      Controllers::AlarmController& alarmController;
+      Controllers::TouchHandler& touchHandler;
 
-      Pinetime::Controllers::FirmwareValidator validator;
+      Controllers::FirmwareValidator validator;
       Controllers::BrightnessController brightnessController;
 
       TaskHandle_t taskHandle;

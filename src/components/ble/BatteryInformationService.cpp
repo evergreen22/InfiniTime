@@ -13,7 +13,7 @@ int BatteryInformationServiceCallback(uint16_t conn_handle, uint16_t attr_handle
   return batteryInformationService->OnBatteryServiceRequested(conn_handle, attr_handle, ctxt);
 }
 
-BatteryInformationService::BatteryInformationService(Controllers::Battery& batteryController)
+BatteryInformationService::BatteryInformationService(const Controllers::Battery& batteryController)
   : batteryController {batteryController},
     characteristicDefinition {{.uuid = &batteryLevelUuid.u,
                                .access_cb = BatteryInformationServiceCallback,

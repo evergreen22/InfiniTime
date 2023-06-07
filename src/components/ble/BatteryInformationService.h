@@ -14,13 +14,13 @@ namespace Pinetime {
     class Battery;
     class BatteryInformationService {
     public:
-      BatteryInformationService(Controllers::Battery& batteryController);
+      BatteryInformationService(const Controllers::Battery& batteryController);
       void Init();
 
       int OnBatteryServiceRequested(uint16_t connectionHandle, uint16_t attributeHandle, ble_gatt_access_ctxt* context);
       void NotifyBatteryLevel(uint16_t connectionHandle, uint8_t level);
     private:
-      Controllers::Battery& batteryController;
+      const Controllers::Battery& batteryController;
       static constexpr uint16_t batteryInformationServiceId {0x180F};
       static constexpr uint16_t batteryLevelId {0x2A19};
 

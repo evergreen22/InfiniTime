@@ -23,8 +23,8 @@ namespace Pinetime {
       public:
         Clock(DisplayApp* app,
               Controllers::DateTime& dateTimeController,
-              Controllers::Battery& batteryController,
-              Controllers::Ble& bleController,
+              const Controllers::Battery& batteryController,
+              const Controllers::Ble& bleController,
               Controllers::NotificationManager& notificatioManager,
               Controllers::Settings& settingsController,
               Controllers::HeartRateController& heartRateController,
@@ -35,8 +35,8 @@ namespace Pinetime {
 
       private:
         Controllers::DateTime& dateTimeController;
-        Controllers::Battery& batteryController;
-        Controllers::Ble& bleController;
+        const Controllers::Battery& batteryController;
+        const Controllers::Ble& bleController;
         Controllers::NotificationManager& notificatioManager;
         Controllers::Settings& settingsController;
         Controllers::HeartRateController& heartRateController;

@@ -24,12 +24,12 @@
 
 using namespace Pinetime::Controllers;
 
-NimbleController::NimbleController(Pinetime::System::SystemTask& systemTask,
+NimbleController::NimbleController(System::SystemTask& systemTask,
                                    Ble& bleController,
                                    DateTime& dateTimeController,
                                    NotificationManager& notificationManager,
-                                   Battery& batteryController,
-                                   Pinetime::Drivers::SpiNorFlash& spiNorFlash,
+                                   const Battery& batteryController,
+                                   Drivers::SpiNorFlash& spiNorFlash,
                                    HeartRateController& heartRateController,
                                    MotionController& motionController,
                                    FS& fs)
@@ -364,7 +364,7 @@ void NimbleController::StartDiscovery() {
   }
 }
 
-uint16_t NimbleController::connHandle() {
+uint16_t NimbleController::connHandle() const {
   return connectionHandle;
 }
 

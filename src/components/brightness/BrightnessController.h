@@ -18,8 +18,8 @@ namespace Pinetime {
       void Backup();
       void Restore();
 
-      const char* GetIcon();
-      const char* ToString();
+      const char* GetIcon() const;
+      const char* ToString() const;
 
     private:
       Levels level = Levels::High;

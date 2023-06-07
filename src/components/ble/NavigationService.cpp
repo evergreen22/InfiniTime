@@ -92,18 +92,18 @@ int Pinetime::Controllers::NavigationService::OnCommand(uint16_t conn_handle, ui
   return 0;
 }
 
-std::string Pinetime::Controllers::NavigationService::getFlag() {
+std::string Pinetime::Controllers::NavigationService::getFlag() const {
   return m_flag;
 }
 
-std::string Pinetime::Controllers::NavigationService::getNarrative() {
+std::string Pinetime::Controllers::NavigationService::getNarrative() const {
   return m_narrative;
 }
 
-std::string Pinetime::Controllers::NavigationService::getManDist() {
+std::string Pinetime::Controllers::NavigationService::getManDist() const {
   return m_manDist;
 }
 
-int Pinetime::Controllers::NavigationService::getProgress() {
+int Pinetime::Controllers::NavigationService::getProgress() const {
   return m_progress;
 }

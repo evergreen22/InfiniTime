@@ -24,7 +24,7 @@ namespace Pinetime {
                       uint8_t numScreens,
                       DisplayApp* app,
                       Controllers::Settings& settingsController,
-                      Pinetime::Controllers::Battery& batteryController,
+                      const Controllers::Battery& batteryController,
                       Controllers::DateTime& dateTimeController,
                       std::array<Applications, 6>& applications);
 
@@ -34,7 +34,7 @@ namespace Pinetime {
         void OnValueChangedEvent(lv_obj_t* obj, uint32_t buttonId);
 
       private:
-        Pinetime::Controllers::Battery& batteryController;
+        const Controllers::Battery& batteryController;
         Controllers::DateTime& dateTimeController;
 
         lv_task_t* taskUpdate;

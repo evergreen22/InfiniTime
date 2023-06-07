@@ -22,7 +22,7 @@ namespace Pinetime {
       
       uint32_t GetTimeRemaining();
       
-      bool IsRunning();
+      bool IsRunning() const;
 
       void OnTimerEnd();
 

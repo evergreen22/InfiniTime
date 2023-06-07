@@ -40,12 +40,12 @@ namespace Pinetime {
     class NimbleController {
 
     public:
-      NimbleController(Pinetime::System::SystemTask& systemTask,
+      NimbleController(System::SystemTask& systemTask,
                        Ble& bleController,
                        DateTime& dateTimeController,
                        NotificationManager& notificationManager,
-                       Battery& batteryController,
-                       Pinetime::Drivers::SpiNorFlash& spiNorFlash,
+                       const Battery& batteryController,
+                       Drivers::SpiNorFlash& spiNorFlash,
                        HeartRateController& heartRateController,
                        MotionController& motionController,
                        FS& fs);
@@ -78,7 +78,8 @@ namespace Pinetime {
         return anService;
       };
 
-      uint16_t connHandle();
+      uint16_t connHandle() const;
+
       void NotifyBatteryLevel(uint8_t level);
 
       void RestartFastAdv() {
@@ -92,11 +93,11 @@ namespace Pinetime {
       void RestoreBond();
 
       static constexpr const char* deviceName = "InfiniTime";
-      Pinetime::System::SystemTask& systemTask;
+      System::SystemTask& systemTask;
       Ble& bleController;
       DateTime& dateTimeController;
       NotificationManager& notificationManager;
-      Pinetime::Drivers::SpiNorFlash& spiNorFlash;
+      Drivers::SpiNorFlash& spiNorFlash;
       FS& fs;
       DfuService dfuService;
 

@@ -9,17 +9,15 @@
 
 using namespace Pinetime::Controllers;
 
-
 APP_TIMER_DEF(timerAppTimer);
 
 namespace {
   void TimerEnd(void* p_context) {
     auto* controller = static_cast<Pinetime::Controllers::TimerController*> (p_context);
-    if(controller != nullptr)
+    if (controller != nullptr)
       controller->OnTimerEnd();
   }
 }
-
 
 void TimerController::Init() {
   app_timer_create(&timerAppTimer, APP_TIMER_MODE_SINGLE_SHOT, TimerEnd);
@@ -55,9 +53,10 @@ void TimerController::StopTimer() {
   timerRunning = false;
 }
 
-bool TimerController::IsRunning() {
+bool TimerController::IsRunning() const {
   return timerRunning;
 }
+
 void TimerController::OnTimerEnd() {
   timerRunning = false;
   if(systemTask != nullptr)

@@ -17,11 +17,11 @@ namespace Pinetime {
       class QuickSettings : public Screen {
       public:
         QuickSettings(DisplayApp* app,
-                      Pinetime::Controllers::Battery& batteryController,
+                      const Controllers::Battery& batteryController,
                       Controllers::DateTime& dateTimeController,
                       Controllers::BrightnessController& brightness,
                       Controllers::MotorController& motorController,
-                      Pinetime::Controllers::Settings& settingsController);
+                      Controllers::Settings& settingsController);
 
         ~QuickSettings() override;
 
@@ -30,7 +30,7 @@ namespace Pinetime {
         void UpdateScreen();
 
       private:
-        Pinetime::Controllers::Battery& batteryController;
+        const Controllers::Battery& batteryController;
         Controllers::DateTime& dateTimeController;
         Controllers::BrightnessController& brightness;
         Controllers::MotorController& motorController;

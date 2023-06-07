@@ -98,7 +98,7 @@ void BrightnessController::Step() {
   }
 }
 
-const char* BrightnessController::GetIcon() {
+const char* BrightnessController::GetIcon() const {
   switch (level) {
     case Levels::Medium:
       return Applications::Screens::Symbols::brightnessMedium;
@@ -110,7 +110,7 @@ const char* BrightnessController::GetIcon() {
   return Applications::Screens::Symbols::brightnessLow;
 }
 
-const char* BrightnessController::ToString() {
+const char* BrightnessController::ToString() const {
   switch (level) {
     case Levels::Off:
       return "Off";

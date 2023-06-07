@@ -31,12 +31,12 @@ namespace {
 
 SystemInfo::SystemInfo(Pinetime::Applications::DisplayApp* app,
                        Pinetime::Controllers::DateTime& dateTimeController,
-                       Pinetime::Controllers::Battery& batteryController,
+                       const Pinetime::Controllers::Battery& batteryController,
                        Pinetime::Controllers::BrightnessController& brightnessController,
-                       Pinetime::Controllers::Ble& bleController,
+                       const Pinetime::Controllers::Ble& bleController,
                        const Pinetime::Drivers::Watchdog& watchdog,
                        Pinetime::Controllers::MotionController& motionController,
-                       Pinetime::Drivers::Cst816S& touchPanel)
+                       const Pinetime::Drivers::Cst816S& touchPanel)
   : Screen(app),
     dateTimeController {dateTimeController},
     batteryController {batteryController},

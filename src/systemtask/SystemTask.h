@@ -54,7 +54,7 @@ namespace Pinetime {
     public:
       SystemTask(Drivers::SpiMaster& spi,
                  Drivers::St7789& lcd,
-                 Pinetime::Drivers::SpiNorFlash& spiNorFlash,
+                 Drivers::SpiNorFlash& spiNorFlash,
                  Drivers::TwiMaster& twiMaster,
                  Drivers::Cst816S& touchPanel,
                  Components::LittleVgl& lvgl,
@@ -64,18 +64,18 @@ namespace Pinetime {
                  Controllers::TimerController& timerController,
                  Controllers::AlarmController& alarmController,
                  Drivers::Watchdog& watchdog,
-                 Pinetime::Controllers::NotificationManager& notificationManager,
-                 Pinetime::Controllers::MotorController& motorController,
-                 Pinetime::Drivers::Hrs3300& heartRateSensor,
-                 Pinetime::Controllers::MotionController& motionController,
-                 Pinetime::Drivers::Bma421& motionSensor,
+                 Controllers::NotificationManager& notificationManager,
+                 Controllers::MotorController& motorController,
+                 Drivers::Hrs3300& heartRateSensor,
+                 Controllers::MotionController& motionController,
+                 Drivers::Bma421& motionSensor,
                  Controllers::Settings& settingsController,
-                 Pinetime::Controllers::HeartRateController& heartRateController,
+                 Controllers::HeartRateController& heartRateController,
                  Pinetime::Applications::DisplayApp& displayApp,
                  Pinetime::Applications::HeartRateTask& heartRateApp,
-                 Pinetime::Controllers::FS& fs,
-                 Pinetime::Controllers::TouchHandler& touchHandler,
-                 Pinetime::Controllers::ButtonHandler& buttonHandler);
+                 Controllers::FS& fs,
+                 Controllers::TouchHandler& touchHandler,
+                 Controllers::ButtonHandler& buttonHandler);
 
       void Start();
       void PushMessage(Messages msg);
@@ -96,38 +96,38 @@ namespace Pinetime {
     private:
       TaskHandle_t taskHandle;
 
-      Pinetime::Drivers::SpiMaster& spi;
-      Pinetime::Drivers::St7789& lcd;
-      Pinetime::Drivers::SpiNorFlash& spiNorFlash;
-      Pinetime::Drivers::TwiMaster& twiMaster;
-      Pinetime::Drivers::Cst816S& touchPanel;
-      Pinetime::Components::LittleVgl& lvgl;
-      Pinetime::Controllers::Battery& batteryController;
+      Drivers::SpiMaster& spi;
+      Drivers::St7789& lcd;
+      Drivers::SpiNorFlash& spiNorFlash;
+      Drivers::TwiMaster& twiMaster;
+      Drivers::Cst816S& touchPanel;
+      Components::LittleVgl& lvgl;
+      Controllers::Battery& batteryController;
 
-      Pinetime::Controllers::Ble& bleController;
-      Pinetime::Controllers::DateTime& dateTimeController;
-      Pinetime::Controllers::TimerController& timerController;
-      Pinetime::Controllers::AlarmController& alarmController;
+      Controllers::Ble& bleController;
+      Controllers::DateTime& dateTimeController;
+      Controllers::TimerController& timerController;
+      Controllers::AlarmController& alarmController;
       QueueHandle_t systemTasksMsgQueue;
       std::atomic<bool> isSleeping {false};
       std::atomic<bool> isGoingToSleep {false};
       std::atomic<bool> isWakingUp {false};
       std::atomic<bool> isDimmed {false};
-      Pinetime::Drivers::Watchdog& watchdog;
-      Pinetime::Controllers::NotificationManager& notificationManager;
-      Pinetime::Controllers::MotorController& motorController;
-      Pinetime::Drivers::Hrs3300& heartRateSensor;
-      Pinetime::Drivers::Bma421& motionSensor;
-      Pinetime::Controllers::Settings& settingsController;
-      Pinetime::Controllers::HeartRateController& heartRateController;
-      Pinetime::Controllers::MotionController& motionController;
+      Drivers::Watchdog& watchdog;
+      Controllers::NotificationManager& notificationManager;
+      Controllers::MotorController& motorController;
+      Drivers::Hrs3300& heartRateSensor;
+      Drivers::Bma421& motionSensor;
+      Controllers::Settings& settingsController;
+      Controllers::HeartRateController& heartRateController;
+      Controllers::MotionController& motionController;
 
       Pinetime::Applications::DisplayApp& displayApp;
       Pinetime::Applications::HeartRateTask& heartRateApp;
-      Pinetime::Controllers::FS& fs;
-      Pinetime::Controllers::TouchHandler& touchHandler;
-      Pinetime::Controllers::ButtonHandler& buttonHandler;
-      Pinetime::Controllers::NimbleController nimbleController;
+      Controllers::FS& fs;
+      Controllers::TouchHandler& touchHandler;
+      Controllers::ButtonHandler& buttonHandler;
+      Controllers::NimbleController nimbleController;
 
       static void Process(void* instance);
       void Work();

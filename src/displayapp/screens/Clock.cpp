@@ -16,8 +16,8 @@ using namespace Pinetime::Applications::Screens;
 
 Clock::Clock(DisplayApp* app,
              Controllers::DateTime& dateTimeController,
-             Controllers::Battery& batteryController,
-             Controllers::Ble& bleController,
+             const Controllers::Battery& batteryController,
+             const Controllers::Ble& bleController,
              Controllers::NotificationManager& notificatioManager,
              Controllers::Settings& settingsController,
              Controllers::HeartRateController& heartRateController,

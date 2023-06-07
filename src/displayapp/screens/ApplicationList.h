@@ -15,14 +15,14 @@ namespace Pinetime {
       public:
         explicit ApplicationList(DisplayApp* app,
                                  Pinetime::Controllers::Settings& settingsController,
-                                 Pinetime::Controllers::Battery& batteryController,
+                                 const Pinetime::Controllers::Battery& batteryController,
                                  Controllers::DateTime& dateTimeController);
         ~ApplicationList() override;
         bool OnTouchEvent(TouchEvents event) override;
 
       private:
         Controllers::Settings& settingsController;
-        Pinetime::Controllers::Battery& batteryController;
+        const Controllers::Battery& batteryController;
         Controllers::DateTime& dateTimeController;
 
         ScreenList<2> screens;
