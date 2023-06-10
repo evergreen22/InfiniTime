@@ -33,7 +33,6 @@ namespace Pinetime {
       SettingDisplay,
       SettingWakeUp,
       SettingSteps,
-      SettingPineTimeStyle,
       SettingSetDate,
       SettingSetTime,
       SettingAirplaneMode,

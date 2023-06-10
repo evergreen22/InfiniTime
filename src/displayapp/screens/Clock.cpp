@@ -10,7 +10,6 @@
 #include "displayapp/DisplayApp.h"
 #include "displayapp/screens/WatchFaceDigital.h"
 #include "displayapp/screens/WatchFaceAnalog.h"
-#include "displayapp/screens/PineTimeStyle.h"
 
 using namespace Pinetime::Applications::Screens;
 
@@ -37,9 +36,6 @@ Clock::Clock(DisplayApp* app,
           break;
         case 1:
           return WatchFaceAnalogScreen();
-          break;
-        case 2:
-          return PineTimeStyleScreen();
           break;
       }
       return WatchFaceDigitalScreen();
@@ -71,12 +67,3 @@ std::unique_ptr<Screen> Clock::WatchFaceAnalogScreen() {
     app, dateTimeController, batteryController, bleController, notificatioManager, settingsController);
 }
 
-std::unique_ptr<Screen> Clock::PineTimeStyleScreen() {
-  return std::make_unique<Screens::PineTimeStyle>(app,
-                                                     dateTimeController,
-                                                     batteryController,
-                                                     bleController,
-                                                     notificatioManager,
-                                                     settingsController,
-                                                     motionController);
-}

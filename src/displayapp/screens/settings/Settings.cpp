@@ -49,9 +49,9 @@ std::unique_ptr<Screen> Settings::CreateScreen2() {
 
   std::array<Screens::List::Applications, 4> applications {{
     {Symbols::check, "Firmware", Apps::FirmwareValidation},
-    {Symbols::paintbrush, "PTS colors", Apps::SettingPineTimeStyle},
     {Symbols::clock, "Set date", Apps::SettingSetDate},
-    {Symbols::clock, "Set time", Apps::SettingSetTime}
+    {Symbols::clock, "Set time", Apps::SettingSetTime},
+    {Symbols::shoe, "Steps", Apps::SettingSteps}
   }};
 
   return std::make_unique<Screens::List>(1, 3, app, settingsController, applications);
@@ -60,10 +60,10 @@ std::unique_ptr<Screen> Settings::CreateScreen2() {
 std::unique_ptr<Screen> Settings::CreateScreen3() {
 
   std::array<Screens::List::Applications, 4> applications {{
-    {Symbols::shoe, "Steps", Apps::SettingSteps},
     {Symbols::clock, "Time format", Apps::SettingTimeFormat},
     {Symbols::eye, "Wake up", Apps::SettingWakeUp},
-    {Symbols::home, "Watch face", Apps::SettingWatchFace}
+    {Symbols::home, "Watch face", Apps::SettingWatchFace},
+    {Symbols::none, "None", Apps::None}
   }};
 
   return std::make_unique<Screens::List>(2, 3, app, settingsController, applications);
