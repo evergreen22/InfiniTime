@@ -16,7 +16,6 @@
 #include "components/ble/DeviceInformationService.h"
 #include "components/ble/DfuService.h"
 #include "components/ble/HeartRateService.h"
-#include "components/ble/ImmediateAlertService.h"
 #include "components/ble/MotionService.h"
 #include "components/ble/MusicService.h"
 #include "components/ble/NavigationService.h"
@@ -109,7 +108,6 @@ namespace Pinetime {
       MusicService musicService;
       NavigationService navService;
       BatteryInformationService batteryInformationService;
-      ImmediateAlertService immediateAlertService;
       HeartRateService heartRateService;
       MotionService motionService;
       ServiceDiscovery serviceDiscovery;
