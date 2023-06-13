@@ -406,7 +406,6 @@ list(APPEND SOURCE_FILES
         displayapp/screens/SystemInfo.cpp
         displayapp/screens/Label.cpp
         displayapp/screens/FirmwareUpdate.cpp
-        displayapp/screens/Music.cpp
         displayapp/screens/Navigation.cpp
         displayapp/screens/Metronome.cpp
         displayapp/screens/Motion.cpp
@@ -471,7 +470,6 @@ list(APPEND SOURCE_FILES
         components/ble/DfuService.cpp
         components/ble/CurrentTimeService.cpp
         components/ble/AlertNotificationService.cpp
-        components/ble/MusicService.cpp
         components/ble/NavigationService.cpp
         displayapp/fonts/lv_font_navi_80.c
         components/ble/BatteryInformationService.cpp
@@ -541,7 +539,6 @@ list(APPEND RECOVERY_SOURCE_FILES
         components/ble/DfuService.cpp
         components/ble/CurrentTimeService.cpp
         components/ble/AlertNotificationService.cpp
-        components/ble/MusicService.cpp
         components/ble/BatteryInformationService.cpp
         components/ble/ServiceDiscovery.cpp
         components/ble/NavigationService.cpp

@@ -4,7 +4,6 @@
 #include "displayapp/screens/Notifications.h"
 #include "displayapp/screens/Symbols.h"
 #include "displayapp/DisplayApp.h"
-#include "components/ble/MusicService.h"
 #include "components/ble/AlertNotificationService.h"
 
 using namespace Pinetime::Applications::Screens;

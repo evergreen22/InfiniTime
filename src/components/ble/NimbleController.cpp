@@ -45,7 +45,6 @@ NimbleController::NimbleController(System::SystemTask& systemTask,
     anService {systemTask, notificationManager},
     alertNotificationClient {systemTask, notificationManager},
     currentTimeService {dateTimeController},
-    musicService {systemTask},
     navService {systemTask},
     batteryInformationService {batteryController},
     heartRateService {systemTask, heartRateController},
@@ -84,7 +83,6 @@ void NimbleController::Init() {
   deviceInformationService.Init();
   currentTimeClient.Init();
   currentTimeService.Init();
-  musicService.Init();
   navService.Init();
   anService.Init();
   dfuService.Init();

@@ -41,11 +41,11 @@ bool ApplicationList::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
 std::unique_ptr<Screen> ApplicationList::CreateScreen1() {
   std::array<Screens::Tile::Applications, 6> applications {{
     {Symbols::stopWatch, Apps::StopWatch},
-    {Symbols::music, Apps::Music},
-    {Symbols::map, Apps::Navigation},
     {Symbols::shoe, Apps::Steps},
     {Symbols::heartBeat, Apps::HeartRate},
     {Symbols::hourGlass, Apps::Timer},
+    {Symbols::chartLine, Apps::Motion},
+    {Symbols::clock, Apps::Alarm},
   }};
 
   return std::make_unique<Screens::Tile>(0, 2, app, settingsController, batteryController, dateTimeController, applications);
@@ -53,12 +53,12 @@ std::unique_ptr<Screen> ApplicationList::CreateScreen1() {
 
 std::unique_ptr<Screen> ApplicationList::CreateScreen2() {
   std::array<Screens::Tile::Applications, 6> applications {{
+    {Symbols::none, Apps::None},
+    {Symbols::map, Apps::Navigation},
     {Symbols::paintbrush, Apps::Paint},
     {Symbols::paddle, Apps::Paddle},
     {"2", Apps::Twos},
-    {Symbols::chartLine, Apps::Motion},
     {Symbols::drum, Apps::Metronome},
-    {Symbols::clock, Apps::Alarm},
   }};
 
   return std::make_unique<Screens::Tile>(1, 2, app, settingsController, batteryController, dateTimeController, applications);
