@@ -17,7 +17,6 @@
 #include "components/ble/DfuService.h"
 #include "components/ble/HeartRateService.h"
 #include "components/ble/MotionService.h"
-#include "components/ble/NavigationService.h"
 #include "components/ble/ServiceDiscovery.h"
 #include "components/fs/FS.h"
 
@@ -64,10 +63,6 @@ namespace Pinetime {
 
       void StartDiscovery();
 
-      Pinetime::Controllers::NavigationService& navigation() {
-        return navService;
-      };
-
       Pinetime::Controllers::AlertNotificationService& alertService() {
         return anService;
       };
@@ -100,7 +95,6 @@ namespace Pinetime {
       AlertNotificationService anService;
       AlertNotificationClient alertNotificationClient;
       CurrentTimeService currentTimeService;
-      NavigationService navService;
       BatteryInformationService batteryInformationService;
       HeartRateService heartRateService;
       MotionService motionService;

@@ -54,7 +54,7 @@ std::unique_ptr<Screen> ApplicationList::CreateScreen1() {
 std::unique_ptr<Screen> ApplicationList::CreateScreen2() {
   std::array<Screens::Tile::Applications, 6> applications {{
     {Symbols::none, Apps::None},
-    {Symbols::map, Apps::Navigation},
+    {Symbols::none, Apps::None},
     {Symbols::paintbrush, Apps::Paint},
     {Symbols::paddle, Apps::Paddle},
     {"2", Apps::Twos},
