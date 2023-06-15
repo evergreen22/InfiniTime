@@ -15,7 +15,6 @@ namespace Pinetime {
       Alarm,
       FlashLight,
       BatteryInfo,
-      Paddle,
       Twos,
       HeartRate,
       StopWatch,

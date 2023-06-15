@@ -53,12 +53,12 @@ std::unique_ptr<Screen> ApplicationList::CreateScreen1() {
 
 std::unique_ptr<Screen> ApplicationList::CreateScreen2() {
   std::array<Screens::Tile::Applications, 6> applications {{
-    {Symbols::none, Apps::None},
-    {Symbols::none, Apps::None},
-    {Symbols::none, Apps::None},
-    {Symbols::paddle, Apps::Paddle},
     {"2", Apps::Twos},
     {Symbols::drum, Apps::Metronome},
+    {Symbols::none, Apps::None},
+    {Symbols::none, Apps::None},
+    {Symbols::none, Apps::None},
+    {Symbols::none, Apps::None},
   }};
 
   return std::make_unique<Screens::Tile>(1, 2, app, settingsController, batteryController, dateTimeController, applications);

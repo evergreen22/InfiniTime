@@ -22,7 +22,6 @@ namespace Pinetime {
         static constexpr const char* check = "\xEF\x95\xA0";
         static constexpr const char* tachometer = "\xEF\x8F\xBD";
         static constexpr const char* asterisk = "\xEF\x81\xA9";
-        static constexpr const char* paddle = "\xEF\x91\x9D";
         static constexpr const char* qrcode = "\xEF\x80\xa9";
         static constexpr const char* phone = "\xEF\x82\x95";
         static constexpr const char* phoneSlash = "\xEF\x8F\x9D";
