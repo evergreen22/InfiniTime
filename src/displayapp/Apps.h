@@ -18,7 +18,6 @@ namespace Pinetime {
       Twos,
       HeartRate,
       StopWatch,
-      Metronome,
       Motion,
       Steps,
       PassKey,

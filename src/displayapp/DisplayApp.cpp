@@ -16,7 +16,6 @@
 #include "displayapp/screens/FirmwareUpdate.h"
 #include "displayapp/screens/FirmwareValidation.h"
 #include "displayapp/screens/StopWatch.h"
-#include "displayapp/screens/Metronome.h"
 #include "displayapp/screens/Notifications.h"
 #include "displayapp/screens/SystemInfo.h"
 #include "displayapp/screens/Tile.h"
@@ -462,13 +461,13 @@ void DisplayApp::LoadApp(Apps app, DisplayApp::FullRefreshDirections direction) 
     case Apps::Paddle:
       currentScreen = std::make_unique<Screens::Paddle>(this, lvgl);
       break;
-*/
-    case Apps::Twos:
-      currentScreen = std::make_unique<Screens::Twos>(this);
-      break;
     case Apps::Metronome:
       currentScreen = std::make_unique<Screens::Metronome>(this, motorController, *systemTask);
       ReturnApp(Apps::Launcher, FullRefreshDirections::Down, TouchEvents::None);
+      break;
+*/
+    case Apps::Twos:
+      currentScreen = std::make_unique<Screens::Twos>(this);
       break;
   }
   currentApp = app;
