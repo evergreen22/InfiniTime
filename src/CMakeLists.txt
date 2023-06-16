@@ -430,7 +430,6 @@ list(APPEND SOURCE_FILES
         displayapp/screens/settings/SettingWakeUp.cpp
         displayapp/screens/settings/SettingDisplay.cpp
         displayapp/screens/settings/SettingSteps.cpp
-        displayapp/screens/settings/SettingSetTime.cpp
         displayapp/screens/settings/SettingAirplaneMode.cpp
 
         ## Watch faces
