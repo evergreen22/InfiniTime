@@ -28,7 +28,6 @@ namespace Pinetime {
       SettingDisplay,
       SettingWakeUp,
       SettingSteps,
-      SettingSetDate,
       SettingSetTime,
       SettingAirplaneMode,
       Error
