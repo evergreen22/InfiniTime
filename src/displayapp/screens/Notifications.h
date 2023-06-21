@@ -62,6 +62,7 @@ namespace Pinetime {
         };
         Pinetime::Controllers::NotificationManager& notificationManager;
         Pinetime::Controllers::AlertNotificationService& alertNotificationService;
+        Pinetime::Controllers::MotorController& motorController;
         Modes mode = Modes::Normal;
         std::unique_ptr<NotificationItem> currentItem;
         Pinetime::Controllers::NotificationManager::Notification::Id currentId;
@@ -72,7 +73,7 @@ namespace Pinetime {
         uint32_t timeoutTickCountStart;
         uint32_t timeoutTickCountEnd;
 
-        lv_task_t* taskRefresh;
+        lv_task_t* taskRefresh = nullptr;
       };
     }
   }
