@@ -201,7 +201,7 @@ Notifications::NotificationItem::NotificationItem(const char* title,
   switch (category) {
     default: {
       lv_obj_set_style_local_text_color(alert_msg, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_YELLOW);
-      //lv_obj_set_style_local_text_font(alert_msg, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_42);
+      lv_obj_set_style_local_text_font(alert_msg, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_28);
       lv_label_set_text(alert_msg, msg);
     } break;
     case Pinetime::Controllers::NotificationManager::Categories::IncomingCall: {
@@ -211,6 +211,7 @@ Notifications::NotificationItem::NotificationItem(const char* title,
 
       lv_obj_t* alert_caller = lv_label_create(container1, nullptr);
       lv_obj_set_style_local_text_color(alert_caller, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_YELLOW);
+      lv_obj_set_style_local_text_font(alert_caller, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_28);
       lv_obj_align(alert_caller, alert_msg, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
       lv_label_set_long_mode(alert_caller, LV_LABEL_LONG_BREAK);
       lv_obj_set_width(alert_caller, LV_HOR_RES - 20);

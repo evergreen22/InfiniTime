@@ -480,10 +480,11 @@ list(APPEND SOURCE_FILES
         FreeRTOS/port_cmsis.c
 
         displayapp/LittleVgl.cpp
-        displayapp/fonts/jetbrains_mono_extrabold_compressed.c
         displayapp/fonts/jetbrains_mono_bold_20.c
-        displayapp/fonts/jetbrains_mono_76.c
+        displayapp/fonts/jetbrains_mono_extrabold_compressed.c
+        displayapp/fonts/jetbrains_mono_28.c
         displayapp/fonts/jetbrains_mono_42.c
+        displayapp/fonts/jetbrains_mono_76.c
         displayapp/fonts/lv_font_sys_48.c
         displayapp/fonts/open_sans_light.c
         displayapp/lv_pinetime_theme.c
