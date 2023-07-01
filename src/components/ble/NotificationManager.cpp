@@ -7,102 +7,88 @@ using namespace Pinetime::Controllers;
 
 constexpr uint8_t NotificationManager::MessageSize;
 
-void NotificationManager::Push(NotificationManager::Notification&& notif) {
-  notif.id = GetNextId();
+void NotificationManager::Push(NotificationManager::Notification& notif) {
+  if ((cBufTail + 1) % bufSize == cBufHead) {
+    notifications[cBufHead].valid = false;
+    cBufHead = (cBufHead + 1) % bufSize;
+    notifCnt--;
+   }
+
   notif.valid = true;
-  notifications[writeIndex] = std::move(notif);
-  writeIndex = (writeIndex + 1 < TotalNbNotifications) ? writeIndex + 1 : 0;
-  if (!empty)
-    readIndex = (readIndex + 1 < TotalNbNotifications) ? readIndex + 1 : 0;
-  else
-    empty = false;
+  notif.notifNumber = 1;
 
-  newNotification = true;
+  notifications[cBufTail] = notif;
+  cBufTail = (cBufTail + 1) % bufSize;
+  notifCnt++;
+
+  cBufNdx = cBufTail;
+  notifNum = 0;
+
+  newNotification.exchange(true);
 }
 
-NotificationManager::Notification NotificationManager::GetLastNotification() {
-  NotificationManager::Notification notification = notifications[readIndex];
-  notification.index = 1;
-  return notification;
+NotificationManager::Notification NotificationManager::GetLast() {
+  cBufNdx = cBufTail;
+  notifNum = 0;
+
+  return GetPrevious();
 }
 
-NotificationManager::Notification::Id NotificationManager::GetNextId() {
-  return nextId++;
+NotificationManager::Notification NotificationManager::GetPrevious() {
+  NotificationManager::Notification notif;
+
+  if ((cBufTail != cBufHead) && (cBufNdx != cBufHead)) {
+    if (cBufNdx == 0)
+      cBufNdx = bufSize - 1;
+    else
+      cBufNdx--;
+
+    notif = notifications[cBufNdx];
+    notif.notifNumber = ++notifNum;
+  }
+
+  return notif;
 }
 
-NotificationManager::Notification NotificationManager::GetNext(NotificationManager::Notification::Id id) {
-  auto currentIterator = std::find_if(notifications.begin(), notifications.end(), [id](const Notification& n) {
-    return n.valid && n.id == id;
-  });
-  if (currentIterator == notifications.end() || currentIterator->id != id)
-    return Notification {};
+NotificationManager::Notification NotificationManager::GetNext() {
+  NotificationManager::Notification notif;
 
-  auto& lastNotification = notifications[readIndex];
+  if ((cBufTail != cBufHead) && (((cBufNdx + 1) % bufSize) != cBufTail)) {
+    cBufNdx = (cBufNdx + 1) % bufSize;
 
-  NotificationManager::Notification result;
+    notif = notifications[cBufNdx];
+    notif.notifNumber = --notifNum;
+  }
 
-  if (currentIterator == (notifications.end() - 1))
-    result = *(notifications.begin());
-  else
-    result = *(currentIterator + 1);
-
-  if (result.id <= id)
-    return {};
-
-  result.index = (lastNotification.id - result.id) + 1;
-  return result;
+  return notif;
 }
 
-NotificationManager::Notification NotificationManager::GetPrevious(NotificationManager::Notification::Id id) {
-  auto currentIterator = std::find_if(notifications.begin(), notifications.end(), [id](const Notification& n) {
-    return n.valid && n.id == id;
-  });
-  if (currentIterator == notifications.end() || currentIterator->id != id)
-    return Notification {};
-
-  auto& lastNotification = notifications[readIndex];
-
-  NotificationManager::Notification result;
-
-  if (currentIterator == notifications.begin())
-    result = *(notifications.end() - 1);
-  else
-    result = *(currentIterator - 1);
-
-  if (result.id >= id)
-    return {};
-
-  result.index = (lastNotification.id - result.id) + 1;
-  return result;
-}
-
-bool NotificationManager::AreNewNotificationsAvailable() {
+bool NotificationManager::AreNewNotificationsAvailable() const {
   return newNotification;
 }
 
-bool NotificationManager::ClearNewNotificationFlag() {
-  return newNotification.exchange(false);
+void NotificationManager::ClearNewNotificationFlag() {
+  newNotification.exchange(false);
 }
 
-size_t NotificationManager::NbNotifications() const {
-  return std::count_if(notifications.begin(), notifications.end(), [](const Notification& n) {
-    return n.valid;
-  });
-}
-
-const char* NotificationManager::Notification::Message() const {
-  const char* itField = std::find(message.begin(), message.begin() + size - 1, '\0');
-  if (itField != message.begin() + size - 1) {
-    const char* ptr = (itField) + 1;
-    return ptr;
-  }
-  return const_cast<char*>(message.data());
+size_t NotificationManager::NotifyCount() const {
+  return notifCnt;
 }
 
 const char* NotificationManager::Notification::Title() const {
-  const char* itField = std::find(message.begin(), message.begin() + size - 1, '\0');
-  if (itField != message.begin() + size - 1) {
-    return message.data();
-  }
-  return {};
+  const char* str = std::find(message.cbegin(), message.cend(), '\0');
+
+  if (str < (message.cbegin() + msgSize - 1))
+    return const_cast<char*>(message.data());
+
+  return nullptr;
+}
+
+const char* NotificationManager::Notification::Message() const {
+  const char* str = std::find(message.cbegin(), message.cend(), '\0');
+
+  if (str == (message.cbegin() + msgSize - 1))
+    return const_cast<char*>(message.data());
+
+  return (str + 1);
 }

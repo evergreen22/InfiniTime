@@ -59,28 +59,27 @@ int AlertNotificationService::OnAlert(uint16_t conn_handle, uint16_t attr_handle
       return 0;
     }
 
-    size_t bufferSize = std::min(packetLen + stringTerminatorSize, maxBufferSize);
-    auto messageSize = std::min(maxMessageSize, (bufferSize - headerSize));
+    size_t bufferSize = std::min((packetLen + stringTerminatorSize), maxBufferSize);
+    auto messageSize = std::min((bufferSize - headerSize), maxMessageSize);
     Categories category;
 
     NotificationManager::Notification notif;
     os_mbuf_copydata(ctxt->om, headerSize, messageSize - 1, notif.message.data());
     os_mbuf_copydata(ctxt->om, 0, 1, &category);
     notif.message[messageSize - 1] = '\0';
-    notif.size = messageSize;
+    notif.msgSize = messageSize;
 
     // TODO convert all ANS categories to NotificationController categories
     switch (category) {
       case Categories::Call:
-        notif.category = Pinetime::Controllers::NotificationManager::Categories::IncomingCall;
+        notif.category = NotificationManager::Categories::IncomingCall;
         break;
       default:
-        notif.category = Pinetime::Controllers::NotificationManager::Categories::SimpleAlert;
-        break;
+        notif.category = NotificationManager::Categories::SimpleAlert;
     }
 
     auto event = Pinetime::System::Messages::OnNewNotification;
-    notificationManager.Push(std::move(notif));
+    notificationManager.Push(notif);
     systemTask.PushMessage(event);
   }
   return 0;

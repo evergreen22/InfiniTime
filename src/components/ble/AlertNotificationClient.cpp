@@ -43,7 +43,7 @@ namespace {
 }
 
 AlertNotificationClient::AlertNotificationClient(Pinetime::System::SystemTask& systemTask,
-                                                 Pinetime::Controllers::NotificationManager& notificationManager)
+                                                 NotificationManager& notificationManager)
   : systemTask {systemTask}, notificationManager {notificationManager} {
 }
 
@@ -154,15 +154,15 @@ void AlertNotificationClient::OnNotification(ble_gap_event* event) {
     if (packetLen <= headerSize)
       return;
 
-    size_t bufferSize = std::min(packetLen + stringTerminatorSize, maxBufferSize);
-    auto messageSize = std::min(maxMessageSize, (bufferSize - headerSize));
+    size_t bufferSize = std::min((packetLen + stringTerminatorSize), maxBufferSize);
+    auto messageSize = std::min((bufferSize - headerSize), maxMessageSize);
 
     NotificationManager::Notification notif;
     os_mbuf_copydata(event->notify_rx.om, headerSize, messageSize - 1, notif.message.data());
     notif.message[messageSize - 1] = '\0';
-    notif.size = messageSize;
-    notif.category = Pinetime::Controllers::NotificationManager::Categories::SimpleAlert;
-    notificationManager.Push(std::move(notif));
+    notif.msgSize = messageSize;
+    notif.category = NotificationManager::Categories::SimpleAlert;
+    notificationManager.Push(notif);
     systemTask.PushMessage(Pinetime::System::Messages::OnNewNotification);
   }
 }
