@@ -53,10 +53,8 @@ DfuService::DfuService(Pinetime::System::SystemTask& systemTask,
                                 .arg = this,
                                 .flags = BLE_GATT_CHR_F_READ,
                                 .val_handle = &revision,
-
                               },
                               {0}
-
     },
     serviceDefinition {
       {/* Device Information Service */
@@ -113,6 +111,8 @@ int DfuService::SendDfuRevision(os_mbuf* om) const {
 }
 
 int DfuService::WritePacketHandler(uint16_t connectionHandle, os_mbuf* om) {
+  NRF_LOG_INFO("[DFU] -> WritePacketHandler");
+
   switch (state) {
     case States::Start: {
       softdeviceSize = om->om_data[0] + (om->om_data[1] << 8) + (om->om_data[2] << 16) + (om->om_data[3] << 24);
@@ -129,11 +129,13 @@ int DfuService::WritePacketHandler(uint16_t connectionHandle, os_mbuf* om) {
 
       dfuImage.Erase();
 
-      uint8_t data[] {16, 1, 1};
+      uint8_t data[3] {
+        static_cast<uint8_t>(Opcodes::Response),
+        static_cast<uint8_t>(Opcodes::StartDFU),
+        static_cast<uint8_t>(ErrorCodes::NoError)};
       notificationManager.Send(connectionHandle, controlPointCharacteristicHandle, data, 3);
       state = States::Init;
-    }
-      return 0;
+    } break;
     case States::Init: {
       uint16_t deviceType = om->om_data[0] + (om->om_data[1] << 8);
       uint16_t deviceRevision = om->om_data[2] + (om->om_data[3] << 8);
@@ -153,10 +155,7 @@ int DfuService::WritePacketHandler(uint16_t connectionHandle, os_mbuf* om) {
         softdeviceArrayLength,
         sd[0],
         expectedCrc);
-
-      return 0;
-    }
-
+    } break;
     case States::Data: {
       nbPacketReceived++;
       dfuImage.Append(om->om_data, om->om_len);
@@ -165,10 +164,10 @@ int DfuService::WritePacketHandler(uint16_t connectionHandle, os_mbuf* om) {
 
       if ((nbPacketReceived % nbPacketsToNotify) == 0 && bytesReceived != applicationSize) {
         uint8_t data[5] {static_cast<uint8_t>(Opcodes::PacketReceiptNotification),
-                         (uint8_t)(bytesReceived & 0x000000FFu),
-                         (uint8_t)(bytesReceived >> 8u),
-                         (uint8_t)(bytesReceived >> 16u),
-                         (uint8_t)(bytesReceived >> 24u)};
+                         static_cast<uint8_t>(bytesReceived & 0x000000FFu),
+                         static_cast<uint8_t>(bytesReceived >> 8u),
+                         static_cast<uint8_t>(bytesReceived >> 16u),
+                         static_cast<uint8_t>(bytesReceived >> 24u)};
         NRF_LOG_INFO("[DFU] -> Send packet notification: %d bytes received", bytesReceived);
         notificationManager.Send(connectionHandle, controlPointCharacteristicHandle, data, 5);
       }
@@ -180,11 +179,9 @@ int DfuService::WritePacketHandler(uint16_t connectionHandle, os_mbuf* om) {
         notificationManager.Send(connectionHandle, controlPointCharacteristicHandle, data, 3);
         state = States::Validate;
       }
-    }
-      return 0;
+    } break;
     default:
-      // Invalid state
-      return 0;
+      NRF_LOG_INFO("[DFU] -> Unknown data state encountered");
   }
   return 0;
 }
@@ -212,29 +209,43 @@ int DfuService::ControlPointHandler(uint16_t connectionHandle, os_mbuf* om) {
         bleController.FirmwareUpdateTotalBytes(0xffffffffu);
         bleController.FirmwareUpdateCurrentBytes(0);
         systemTask.PushMessage(Pinetime::System::Messages::BleFirmwareUpdateStarted);
-        return 0;
       } else {
         NRF_LOG_INFO("[DFU] -> Start DFU, mode %d not supported!", imageType);
-        return 0;
       }
-    } break;
+      return 0;
+    }
     case Opcodes::InitDFUParameters: {
       if (state != States::Init) {
         NRF_LOG_INFO("[DFU] -> Init DFU requested, but we are not in Init state");
         return 0;
       }
       bool isInitComplete = (om->om_data[1] != 0);
-      NRF_LOG_INFO("[DFU] -> Init DFU parameters %s", isInitComplete ? " complete" : " not complete");
+      NRF_LOG_INFO("[DFU] -> Init DFU parameters %s", isInitComplete ? "complete" : "not complete");
 
       if (isInitComplete) {
         uint8_t data[3] {static_cast<uint8_t>(Opcodes::Response),
                          static_cast<uint8_t>(Opcodes::InitDFUParameters),
                          (isInitComplete ? uint8_t {1} : uint8_t {0})};
         notificationManager.AsyncSend(connectionHandle, controlPointCharacteristicHandle, data, 3);
-        return 0;
       }
-    }
       return 0;
+    }
+    case Opcodes::ResetDFU:
+      NRF_LOG_INFO("[DFU] -> Reset requested");
+      Reset();
+      return 0;
+    case Opcodes::BytesRecvdRequest: {
+      uint8_t data[7] {static_cast<uint8_t>(Opcodes::Response),
+                       static_cast<uint8_t>(Opcodes::BytesRecvdRequest),
+                       static_cast<uint8_t>(ErrorCodes::NoError),
+                       static_cast<uint8_t>(bytesReceived & 0x000000FFu),
+                       static_cast<uint8_t>(bytesReceived >> 8u),
+                       static_cast<uint8_t>(bytesReceived >> 16u),
+                       static_cast<uint8_t>(bytesReceived >> 24u)};
+      NRF_LOG_INFO("[DFU] -> Requested number of bytes received, %d bytes received", bytesReceived);
+      notificationManager.Send(connectionHandle, controlPointCharacteristicHandle, data, 7);
+      return 0;
+    }
     case Opcodes::PacketReceiptNotificationRequest:
       nbPacketsToNotify = om->om_data[1];
       NRF_LOG_INFO("[DFU] -> Receive Packet Notification Request, nb packet = %d", nbPacketsToNotify);
@@ -244,7 +255,8 @@ int DfuService::ControlPointHandler(uint16_t connectionHandle, os_mbuf* om) {
         NRF_LOG_INFO("[DFU] -> Receive firmware image requested, but we are not in Start Init");
         return 0;
       }
-      // TODO the chunk size is dependant of the implementation of the host application...
+      // TODO The chunk size depends on the host application, larger sizes could be negotiated (not supported here)
+      // TODO The default chunk size is 20 bytes
       dfuImage.Init(20, applicationSize, expectedCrc);
       NRF_LOG_INFO("[DFU] -> Starting receive firmware");
       state = States::Data;
@@ -254,14 +266,11 @@ int DfuService::ControlPointHandler(uint16_t connectionHandle, os_mbuf* om) {
         NRF_LOG_INFO("[DFU] -> Validate firmware image requested, but we are not in Data state %d", state);
         return 0;
       }
-
       NRF_LOG_INFO("[DFU] -> Validate firmware image requested -- %d", connectionHandle);
-
       if (dfuImage.Validate()) {
         state = States::Validated;
         bleController.State(Pinetime::Controllers::Ble::FirmwareUpdateStates::Validated);
         NRF_LOG_INFO("Image OK");
-
         uint8_t data[3] {static_cast<uint8_t>(Opcodes::Response),
                          static_cast<uint8_t>(Opcodes::ValidateFirmware),
                          static_cast<uint8_t>(ErrorCodes::NoError)};
@@ -276,7 +285,6 @@ int DfuService::ControlPointHandler(uint16_t connectionHandle, os_mbuf* om) {
         bleController.State(Pinetime::Controllers::Ble::FirmwareUpdateStates::Error);
         Reset();
       }
-
       return 0;
     }
     case Opcodes::ActivateImageAndReset:
@@ -289,6 +297,7 @@ int DfuService::ControlPointHandler(uint16_t connectionHandle, os_mbuf* om) {
       Reset();
       return 0;
     default:
+      NRF_LOG_INFO("[DFU] -> Unknown control point opcode encountered");
       return 0;
   }
 }
@@ -354,7 +363,9 @@ void DfuService::DfuImage::Init(size_t chunkSize, size_t totalSize, uint16_t exp
   this->chunkSize = chunkSize;
   this->totalSize = totalSize;
   this->expectedCrc = expectedCrc;
-  this->ready = true;
+  bufferWriteIndex = 0;
+  totalWriteIndex = 0;
+  ready = true;
 }
 
 void DfuService::DfuImage::Append(uint8_t* data, size_t size) {
@@ -423,9 +434,9 @@ uint16_t DfuService::DfuImage::ComputeCrc(uint8_t const* p_data, uint32_t size, 
   uint16_t crc = (p_crc == NULL) ? 0xFFFF : *p_crc;
 
   for (uint32_t i = 0; i < size; i++) {
-    crc = (uint8_t)(crc >> 8) | (crc << 8);
+    crc = static_cast<uint8_t>(crc >> 8) | (crc << 8);
     crc ^= p_data[i];
-    crc ^= (uint8_t)(crc & 0xFF) >> 4;
+    crc ^= static_cast<uint8_t>(crc & 0xFF) >> 4;
     crc ^= (crc << 8) << 4;
     crc ^= ((crc & 0xFF) << 4) << 1;
   }
@@ -436,5 +447,5 @@ uint16_t DfuService::DfuImage::ComputeCrc(uint8_t const* p_data, uint32_t size, 
 bool DfuService::DfuImage::IsComplete() {
   if (!ready)
     return false;
-  return totalWriteIndex == totalSize;
+  return (totalWriteIndex == totalSize);
 }

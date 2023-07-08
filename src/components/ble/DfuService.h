@@ -125,6 +125,8 @@ namespace Pinetime {
         ReceiveFirmwareImage = 0x03,
         ValidateFirmware = 0x04,
         ActivateImageAndReset = 0x05,
+        ResetDFU = 0x06,
+        BytesRecvdRequest = 0x07,
         PacketReceiptNotificationRequest = 0x08,
         Response = 0x10,
         PacketReceiptNotification = 0x11
