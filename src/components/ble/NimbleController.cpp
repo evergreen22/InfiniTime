@@ -151,6 +151,7 @@ void NimbleController::StartAdvertising() {
   fields.num_uuids128 = 1;
   fields.uuids128_is_complete = 1;
   fields.tx_pwr_lvl = BLE_HS_ADV_TX_PWR_LVL_AUTO;
+  fields.tx_pwr_lvl_is_present = 1;
 
   rsp_fields.name = reinterpret_cast<const uint8_t*>(deviceName);
   rsp_fields.name_len = strlen(deviceName);
@@ -254,18 +255,7 @@ int NimbleController::OnGAPEvent(ble_gap_event* event) {
       break;
 
     case BLE_GAP_EVENT_PASSKEY_ACTION:
-      /* Authentication has been requested for this connection.
-       *
-       * BLE authentication is determined by the combination of I/O capabilities
-       * on the central and peripheral. When the peripheral is display only and
-       * the central has a keyboard and display then passkey auth is selected.
-       * When both the central and peripheral have displays and support yes/no
-       * buttons then numeric comparison is selected. We currently advertise
-       * display capability only so we only handle the "display" action here.
-       *
-       * Standards insist that the rand() PRNG be deterministic.
-       * Use the tinycrypt prng here since rand() is predictable.
-       */
+      /* Authentication has been requested for this connection. */
       NRF_LOG_INFO("Security event : BLE_GAP_EVENT_PASSKEY_ACTION");
       if (event->passkey.params.action == BLE_SM_IOACT_DISP) {
         struct ble_sm_io pkey = {0};
